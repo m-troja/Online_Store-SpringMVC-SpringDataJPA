@@ -1,0 +1,10 @@
+<!--main js-->
+<script src="/online-store.web/js/jquery-1.12.4.min.js"></script>
+<!--bootstrap js-->
+<script src="/online-store.web/js/bootstrap.min.js"></script>
+<script src="/online-store.web/js/bootstrap-select.min.js"></script>
+<script src="/online-store.web/js/slick.min.js"></script>
+<script src="/online-store.web/js/jquery-ui.js"></script> 
+<script src="/online-store.web/js/wow.min.js"></script>
+<!--custom js-->
+<script src="/online-store.web/js/custom.js"></script>
