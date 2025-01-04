@@ -1,7 +1,4 @@
 package com.itbulls.learnit.onlinestore.web.controllers;
-
-import java.util.Locale;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;

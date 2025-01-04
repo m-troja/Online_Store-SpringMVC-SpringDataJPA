@@ -1,5 +1,11 @@
 <%@ taglib prefix="shop" tagdir="/WEB-INF/tags/shop"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
+
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="OnlineShopResourceBundle" var="rb"/>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +15,7 @@
 	
 	<shop:css-imports-main/>
 	<shop:css-imports-signin/>
+	
 </head>
 <body>
 
@@ -21,7 +28,7 @@
 				<c:if test="${UNSUCCESSFUL_LOGIN_COUNT == null || UNSUCCESSFUL_LOGIN_COUNT < 3}">
 					<form class="login100-form validate-form" action="signin" method="POST">
 						<span class="login100-form-title p-b-26">
-							Welcome
+							<fmt:message key="signin.welcome" bundle="${rb}"/>
 						</span>
 	
 						<div class="wrap-input100 validate-input" data-validate = "Valid email is: a@b.c">
@@ -37,11 +44,17 @@
 							<span class="focus-input100" data-placeholder="Password"></span>
 						</div>
 	
+								<!--  Remember Checkbox -->
+								
+						<input  id="remember" type="checkbox" name="remember">
+						  <label for="remember" >Remember Me</label>	
+	
+	
 						<div class="container-login100-form-btn">
 							<div class="wrap-login100-form-btn">
 								<div class="login100-form-bgbtn"></div>
 								<button class="login100-form-btn">
-									Sign In
+							<fmt:message key="signin.button" bundle="${rb}"/>
 								</button>
 							</div>
 						</div>

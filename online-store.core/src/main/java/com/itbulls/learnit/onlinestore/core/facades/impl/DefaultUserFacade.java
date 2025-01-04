@@ -47,6 +47,7 @@ public class DefaultUserFacade implements UserFacade {
 		user.setRoles(roles);
 		user.setPartnerCode(marketingService.generateUniquePartnerCode());
 		user.setReferrerUser(userRepo.findByPartnerCode(referrerCode));
+		user.setEnabled(true);
 		userManagement.registerUser(user);
 	}
 

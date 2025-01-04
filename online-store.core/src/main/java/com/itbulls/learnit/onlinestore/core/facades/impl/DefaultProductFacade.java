@@ -3,11 +3,10 @@ package com.itbulls.learnit.onlinestore.core.facades.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.itbulls.learnit.onlinestore.core.facades.ProductFacade;
-import com.itbulls.learnit.onlinestore.core.services.impl.SpringDataJpaProductManagementService;
+import com.itbulls.learnit.onlinestore.core.services.impl.JpaProductManagementService;
 import com.itbulls.learnit.onlinestore.persistence.entities.Product;
 import com.itbulls.learnit.onlinestore.persistence.repo.JpaProductRepo;
 
@@ -18,7 +17,7 @@ public class DefaultProductFacade implements ProductFacade {
 	JpaProductRepo productRepo;
 	
 	@Autowired
-	SpringDataJpaProductManagementService productService;
+	JpaProductManagementService productService;
 
 
 	@Override

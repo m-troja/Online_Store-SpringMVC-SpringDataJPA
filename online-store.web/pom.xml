@@ -12,7 +12,7 @@
 	
 	<properties>
 		<spring.version>5.3.23</spring.version>
-<!-- 		<spring.security.version>5.8.1</spring.security.version> -->
+		<spring.security.version>5.8.1</spring.security.version> 
 		<spring.data.jpa.version>2.7.8</spring.data.jpa.version>
 		<serializer.version>2.9.4</serializer.version>
 	</properties>
@@ -62,8 +62,7 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		
-		<!-- 
+ 
 		
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -82,9 +81,7 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>${spring.security.version}</version>
 		</dependency>
-		
-		-->
-		
+
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-slf4j-impl</artifactId>

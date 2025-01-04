@@ -18,6 +18,15 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.LocaleResolver;
@@ -32,7 +41,12 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-// @EnableWebSecurity
+import com.itbulls.learnit.onlinestore.web.security.DefaultAuthenticationFailureHandler;
+import com.itbulls.learnit.onlinestore.web.security.DefaultAuthenticationSuccessHandler;
+import com.itbulls.learnit.onlinestore.web.security.DefaultSuccessLogoutHandler;
+import com.itbulls.learnit.onlinestore.web.security.DefaultUserDetailsService;
+
+@EnableWebSecurity
 @EnableWebMvc
 @Configuration
 @PropertySource("classpath:app.properties")
@@ -140,6 +154,64 @@ public class WebConfig implements WebMvcConfigurer {
 		return transactionManager;
 	}	
 	
+	/* Spring Security Config */
 	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 	
+	@Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    	http.csrf()
+	        .disable()
+	        .authorizeHttpRequests()
+		        .requestMatchers("/online-store.web/admin")
+		        .hasRole("ADMIN")
+		        .requestMatchers("/online-store.web/management*")
+		        .hasRole("MANAGER")
+		        .requestMatchers("/online-store.web/my-profile")//		        
+		        .authenticated()
+	        .and()
+		        .formLogin()
+		        .usernameParameter("email")		// in case you want to use different parameter 
+//		        .passwordParameter("pass")
+		        .loginPage("/online-store.web/signin")
+		        .loginProcessingUrl("/online-store.web/perform_login")
+		        .defaultSuccessUrl("/homepage", false)
+		        .failureUrl("/online-store.web/signin?error=true")
+		        .failureHandler(authenticationFailureHandler())
+	        .and()
+		        .logout()
+		        .logoutUrl("/perform_logout")
+		        .deleteCookies("JSESSIONID")
+		        .permitAll()
+		        .logoutSuccessHandler(logoutSuccessHandler())
+	        .and()
+		     	.rememberMe()
+		     	.key("superSecretKey")
+		        .rememberMeParameter("remember") 
+		        .rememberMeCookieName("rememberlogin");    
+    	return http.build();
+    }
+	
+	@Bean
+	public AuthenticationFailureHandler authenticationFailureHandler() {
+		return new DefaultAuthenticationFailureHandler();
+	}
+	
+	@Bean
+	public LogoutSuccessHandler logoutSuccessHandler() {
+		return new DefaultSuccessLogoutHandler();
+	}
+	
+	public AuthenticationSuccessHandler successHandler() 
+	{
+		return new DefaultAuthenticationSuccessHandler();
+	}
+	
+	@Bean
+	public UserDetailsService userDetailsService() {
+		return new DefaultUserDetailsService();
+	}
 }

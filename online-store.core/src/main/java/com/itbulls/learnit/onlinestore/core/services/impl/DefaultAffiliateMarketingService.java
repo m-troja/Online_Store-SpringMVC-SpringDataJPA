@@ -13,7 +13,7 @@ public class DefaultAffiliateMarketingService implements AffiliateMarketingServi
 	private static final int MAX_CHARS_IN_PARTNER_CODE = 6;
 	
 	@Autowired
-	private SpringDataJpaUserManagementService userRepo;
+	private JpaUserManagementService userRepo;
 
 	@Override
 	public String generateUniquePartnerCode() {

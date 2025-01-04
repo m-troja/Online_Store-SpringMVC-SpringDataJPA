@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.itbulls.learnit.onlinestore.core.mail.impl.DefaultMailSender;
@@ -13,7 +12,7 @@ import com.itbulls.learnit.onlinestore.persistence.entities.User;
 import com.itbulls.learnit.onlinestore.persistence.repo.JpaUserRepo;
 
 @Service
-public class SpringDataJpaUserManagementService implements UserManagementService {
+public class JpaUserManagementService implements UserManagementService {
 	public static final String SUCCESSFULL_REGISTRATION_MESSAGE = "User is registered!";
 	private static final String REGISTRATION_ERROR_MESSAGE = "The email is already in use by other user.";
 
@@ -60,9 +59,9 @@ public class SpringDataJpaUserManagementService implements UserManagementService
 		
 	}
 
-	public List<User> getReferralsByUserId(int id) {
+	public List<User> getReferralsByUserId(User user) {
 		
-		return springDataJpaUserRepo.findByReferrerUser(id);
+		return springDataJpaUserRepo.findByReferrerUser(user);
 	}
 
 	public Optional<User> getUserById(Integer userId) {

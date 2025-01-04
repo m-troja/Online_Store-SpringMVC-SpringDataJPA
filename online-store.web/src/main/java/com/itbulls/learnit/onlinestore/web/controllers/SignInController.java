@@ -2,15 +2,14 @@ package com.itbulls.learnit.onlinestore.web.controllers;
 
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Set;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itbulls.learnit.onlinestore.core.facades.UserFacade;
-import com.itbulls.learnit.onlinestore.persistence.entities.Role;
 import com.itbulls.learnit.onlinestore.persistence.entities.User;
-import com.itbulls.learnit.onlinestore.web.utils.PBKDF2WithHmacSHA1EncryptionService;
 
 @Controller
 @RequestMapping("/signin")
@@ -36,9 +33,8 @@ public class SignInController {
     @Autowired
     private UserFacade userFacade;
 
-    @Autowired
-    private PBKDF2WithHmacSHA1EncryptionService encryptionService;
-
+    private PasswordEncoder encryptionService = new BCryptPasswordEncoder();
+    
     @GetMapping
     public String doGet() {
         return "signin";
@@ -55,19 +51,19 @@ public class SignInController {
         }
         
         LOGGER.debug("Stored password: {}", user.getPassword());
-        LOGGER.debug("Password validation result: {}", encryptionService.validatePassword(password, user.getPassword()));
+        LOGGER.debug("Password validation result: {}", encryptionService.matches(password, user.getPassword()));
 
-        if (encryptionService.validatePassword(password, user.getPassword())) {
+        if (encryptionService.matches(password, user.getPassword())) {
             session.setAttribute(LOGGED_IN_USER_ATTR, user);
             LOGGER.info("User with ID {} is added to the session", user.getId());
 
-            Set<Role> roles = user.getRoles();
-            for (Role role : roles) {
-                if (ADMIN_ROLE_NAME.equals(role.getName())) {
-                    LOGGER.info("User with ID {} is redirected to the admin panel", user.getId());
-                    return "redirect:/admin/panel";
-                }
-            }
+//            Set<Role> roles = user.getRoles();
+//            for (Role role : roles) {
+//                if (ADMIN_ROLE_NAME.equals(role.getName())) {
+//                    LOGGER.info("User with ID {} is redirected to the admin panel", user.getId());
+//                    return "redirect:/admin/panel";
+//                }
+//            }
 
             LOGGER.info("User with ID {} is redirected to the homepage", user.getId());
             return "redirect:/homepage";

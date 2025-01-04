@@ -35,11 +35,11 @@
 								<ul>
 									<c:if test="${loggedInUser != null}">
 										<li><a href="/online-store.web/my-profile"><spring:message code="welcome.lbl"/> ${loggedInUser.firstName}</a></li>
-										<li><a class="custom-b" href="signout"><spring:message code="signout.btn"/></a></li>
+										<li><a class="custom-b" href="/online-store.web/perform_logout"><spring:message code="signout.btn"/></a></li>
 									</c:if>
 									<c:if test="${loggedInUser == null}">
 										<li><a href="/online-store.web/signin"><spring:message code="signin.btn"/></a></li>
-										<li><a class="custom-b" href="signup"><spring:message code="signup.btn"/></a></li>
+										<li><a class="custom-b" href="/online-store.web/signup"><spring:message code="signup.btn"/></a></li>
 									</c:if>
 								</ul>
 							</div>

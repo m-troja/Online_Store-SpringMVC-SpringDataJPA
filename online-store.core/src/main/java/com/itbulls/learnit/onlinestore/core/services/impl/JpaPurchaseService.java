@@ -3,7 +3,6 @@ package com.itbulls.learnit.onlinestore.core.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.itbulls.learnit.onlinestore.core.services.PurchaseManagementService;
@@ -11,7 +10,7 @@ import com.itbulls.learnit.onlinestore.persistence.entities.Purchase;
 import com.itbulls.learnit.onlinestore.persistence.repo.JpaPurchaseRepo;
 
 @Service
-public class SpringDataJpaPurchaseService implements PurchaseManagementService {
+public class JpaPurchaseService implements PurchaseManagementService {
 	
 	@Autowired
 	private JpaPurchaseRepo purchaseRepo;
