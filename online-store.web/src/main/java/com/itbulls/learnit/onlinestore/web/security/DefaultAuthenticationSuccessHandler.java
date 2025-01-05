@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -42,10 +43,14 @@ public class DefaultAuthenticationSuccessHandler implements AuthenticationSucces
 		{
 			session.setAttribute(LOGGED_IN_USER_ATTR, user);
 			session.setAttribute(DefaultAuthenticationFailureHandler.UNSUCCESFUL_LOGIN_COUNT_ATTR_KEY, null);
-			LOGGER.info("User with ID {} is added to the session", user.getId());
+			LOGGER.info("onAuthenticationSuccess: User with ID {} is added to the session", user.getId());
+			Cookie[] cookies = ((HttpServletRequest) request).getCookies();
+			for (Cookie cookie : cookies) {
+				LOGGER.info("onAuthenticationSuccess: Cookie name: " +  cookie.getName() + ", value: "+ cookie.getValue());
+			}
 			if (user.getRoles().stream().map(role -> role.getName()).collect(Collectors.toList()).contains(ADMIN_ROLE_NAME) )
 				{
-					LOGGER.info("User with ID {} is redirected to the admin panel", user.getId());
+					LOGGER.info("onAuthenticationSuccess: User with ID {} is redirected to the admin panel", user.getId());
 					response.sendRedirect(contextPath + "/admin/panel");
 				}
 			else

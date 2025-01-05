@@ -60,7 +60,7 @@ public class User {
 	@Column(name = "enabled")
 	private boolean isEnabled;
 	
-	public boolean isEnabled() {
+	public boolean getEnabled() {
 		return isEnabled;
 	}
 

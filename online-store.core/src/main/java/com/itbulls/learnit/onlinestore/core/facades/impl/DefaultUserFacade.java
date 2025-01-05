@@ -76,4 +76,30 @@ public class DefaultUserFacade implements UserFacade {
 	public List<User> getReferralsForUser(User loggedInUser) {
 		return userRepo.findByReferrerUser(loggedInUser);
 	}
+	
+	
+	public List<User> findByFirstNameCaseInsensitive(String firstName)
+	{
+		return userRepo.findByFirstNameCaseInsensitive(firstName);
+	}
+	
+	public List<User> getAllUsersOrderByFirstName()
+	{
+		return userRepo.findAllOrderByFirstName();
+	}
+
+
+	@Override
+	public void deleteUser(Integer id) {
+		userRepo.delete(getUserById(id));
+		
+	}
+
+
+	@Override
+	public boolean addUser(User user) {
+		userRepo.save(user);		
+		return user.getEnabled();
+	}
+
 }

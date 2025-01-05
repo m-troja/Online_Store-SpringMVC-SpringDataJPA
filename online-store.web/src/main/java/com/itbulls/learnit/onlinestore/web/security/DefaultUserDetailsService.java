@@ -35,7 +35,7 @@ public class DefaultUserDetailsService implements UserDetailsService
 		LOGGER.info("=== DefaultUserDetailsService user.getRoles().toString = "  + user.getRoles().toString());
 
 		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
-				user.isEnabled(), true, true, true, getAuthorities(user.getRoles()));
+				user.getEnabled(), true, true, true, getAuthorities(user.getRoles()));
 	}
 	
 	private Collection<? extends GrantedAuthority> getAuthorities(Set<Role> roles) 

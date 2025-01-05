@@ -33,7 +33,8 @@ public class DefaultProductFacade implements ProductFacade {
 	@Override
 	public List<Product> getProductsByCategoryIdForPageWithLimit(Integer categoryId, Integer page,
 			Integer paginationLimit) {
-		return productRepo.findByCategoryIdPaginationLimit(categoryId, page, paginationLimit);
+		Integer offset = (page - 1) * paginationLimit;
+		return productRepo.findByCategoryIdPaginationLimit(categoryId, offset, paginationLimit);
 	}
 
 	@Override
@@ -61,7 +62,9 @@ public class DefaultProductFacade implements ProductFacade {
 	@Override
 	public List<Product> getProductsLikeNameForPageWithLimit(String searchQuery, Integer page,
 			Integer paginationLimit) {
-		return productRepo.getProductsLikeNameForPageWithLimit(searchQuery, page, paginationLimit);
+		Integer offset = (page - 1) * paginationLimit;
+
+		return productRepo.getProductsLikeNameForPageWithLimit(searchQuery, offset, paginationLimit);
 	}
 
 	@Override

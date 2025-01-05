@@ -20,4 +20,12 @@ public interface UserFacade {
 	void updateUser(User referrerUser);
 
 	List<User> getReferralsForUser(User loggedInUser);
+	
+	List<User> findByFirstNameCaseInsensitive(String firstName);
+
+	List<User> getAllUsersOrderByFirstName();
+
+	void deleteUser(Integer id);
+
+	boolean addUser(User user);
 }
