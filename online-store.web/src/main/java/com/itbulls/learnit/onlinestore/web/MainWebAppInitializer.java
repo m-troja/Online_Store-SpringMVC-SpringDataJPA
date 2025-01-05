@@ -1,5 +1,7 @@
 package com.itbulls.learnit.onlinestore.web;
 
+import java.util.logging.Level;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
@@ -28,5 +30,9 @@ public class MainWebAppInitializer implements WebApplicationInitializer {
 
 		sc.addFilter("securityFilter", new DelegatingFilterProxy("springSecurityFilterChain"))
         	.addMappingForUrlPatterns(null, false, "/*");
+		
+		
+		java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
+
 	}
 }

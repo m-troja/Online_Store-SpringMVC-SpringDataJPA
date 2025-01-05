@@ -32,7 +32,7 @@ public interface JpaProductRepo extends CrudRepository<Product, Integer>
 	
 	@Query(value = "SELECT p.id, p.guid, p.product_name, p.description, p.price, p.category_id, p.img_name, c.id as cat_id, c.category_name, c.img_name as cat_img "
 							+ "FROM learn_it_db.product p JOIN category c ON p.category_id = c.id "
-							+ "WHERE UPPER(product_name) LIKE UPPER(CONCAT('%',:searchQuery,'%')) LIMIT :offset, :limit", nativeQuery = true)
+							+ "WHERE UPPER(product_name) LIKE UPPER(CONCAT('%',?1,'%')) LIMIT ?2, ?3", nativeQuery = true)
 	 List<Product> getProductsLikeNameForPageWithLimit(String searchQuery, Integer offset, Integer limit);
 	
 	Product findByGuid(String guid);

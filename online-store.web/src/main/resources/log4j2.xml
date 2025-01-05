@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="INFO">
 	<Properties>
-        <Property name="basePath">C:\temp\log</Property>
+        <Property name="basePath">C:\tmp\log</Property>
     </Properties>
     <Appenders>
         # Console appender
@@ -19,7 +19,7 @@
                 <Pattern>%d{yyyy-MM-dd HH:mm:ss} %p %m%n</Pattern>
             </PatternLayout>
             <Policies>
-                <SizeBasedTriggeringPolicy size="10 KB"/>
+                <SizeBasedTriggeringPolicy size="10240 KB"/>
             </Policies>
             <DefaultRolloverStrategy max="2"/>
         </RollingFile>

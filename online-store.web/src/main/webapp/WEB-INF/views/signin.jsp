@@ -26,7 +26,7 @@
 			<div class="wrap-login100">
 			
 				<c:if test="${UNSUCCESSFUL_LOGIN_COUNT == null || UNSUCCESSFUL_LOGIN_COUNT < 3}">
-					<form class="login100-form validate-form" action="signin" method="POST">
+					<form class="login100-form validate-form" action="perform_login" method="POST">
 						<span class="login100-form-title p-b-26">
 							<fmt:message key="signin.welcome" bundle="${rb}"/>
 						</span>

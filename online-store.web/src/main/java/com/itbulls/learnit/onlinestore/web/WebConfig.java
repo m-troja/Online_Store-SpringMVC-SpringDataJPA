@@ -62,6 +62,7 @@ public class WebConfig implements WebMvcConfigurer {
 		bean.setViewClass(JstlView.class);
 		bean.setPrefix("/WEB-INF/views/");
 		bean.setSuffix(".jsp");
+		
 		return bean;
 	}
 
@@ -177,10 +178,12 @@ public class WebConfig implements WebMvcConfigurer {
 		        .usernameParameter("email")		// in case you want to use different parameter 
 //		        .passwordParameter("pass")
 		        .loginPage("/online-store.web/signin")
-		        .loginProcessingUrl("/online-store.web/perform_login")
+		        .loginProcessingUrl("/perform_login")
 		        .defaultSuccessUrl("/homepage", false)
+		        .successHandler(successHandler())
 		        .failureUrl("/online-store.web/signin?error=true")
 		        .failureHandler(authenticationFailureHandler())
+		        .permitAll()
 	        .and()
 		        .logout()
 		        .logoutUrl("/perform_logout")
@@ -191,7 +194,8 @@ public class WebConfig implements WebMvcConfigurer {
 		     	.rememberMe()
 		     	.key("superSecretKey")
 		        .rememberMeParameter("remember") 
-		        .rememberMeCookieName("rememberlogin");    
+		        .rememberMeCookieName("rememberlogin")
+		        ;    
     	return http.build();
     }
 	
@@ -205,6 +209,7 @@ public class WebConfig implements WebMvcConfigurer {
 		return new DefaultSuccessLogoutHandler();
 	}
 	
+	@Bean
 	public AuthenticationSuccessHandler successHandler() 
 	{
 		return new DefaultAuthenticationSuccessHandler();
