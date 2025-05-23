@@ -57,14 +57,6 @@ public class SignInController {
             session.setAttribute(LOGGED_IN_USER_ATTR, user);
             LOGGER.info("User with ID {} is added to the session", user.getId());
 
-//            Set<Role> roles = user.getRoles();
-//            for (Role role : roles) {
-//                if (ADMIN_ROLE_NAME.equals(role.getName())) {
-//                    LOGGER.info("User with ID {} is redirected to the admin panel", user.getId());
-//                    return "redirect:/admin/panel";
-//                }
-//            }
-
             LOGGER.info("User with ID {} is redirected to the homepage", user.getId());
             return "redirect:/homepage";
         } else {

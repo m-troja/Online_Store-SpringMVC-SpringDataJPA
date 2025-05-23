@@ -21,7 +21,7 @@ public class AdminController {
 	private PurchaseFacade purchaseFacade;
 	
 	@PostMapping("/panel")
-	public String doPanel(@RequestParam Integer purchaseId)
+	public String doPost(@RequestParam Integer purchaseId)
 	{
 		purchaseFacade.markFulfilmentStageForPurchaseIdAsCompleted(purchaseId);
 	 return "orders";

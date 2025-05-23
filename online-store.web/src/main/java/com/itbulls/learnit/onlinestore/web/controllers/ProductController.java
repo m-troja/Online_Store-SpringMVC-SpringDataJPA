@@ -21,5 +21,4 @@ public class ProductController {
 		model.addAttribute("product", p);
 		return "pdp";
 	}
-   // test for commit
 }

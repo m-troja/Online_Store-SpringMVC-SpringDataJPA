@@ -27,9 +27,30 @@
 							<input type="hidden" name="page" value="1">
 						</div>
 					</form>
+
 				</div>
-				<div class="col-md-8 col-sm-12">
+				<div class="col-md-8 col-sm-12">							
 					<div class="right-nav">
+					
+					<!-- Cart button with badge -->
+						<c:choose>
+						    <c:when test="${loggedInUser != null}">
+						        <a href="/online-store.web/cart" class="btn btn-default cart-btn position-relative">
+						            <span class="glyphicon glyphicon-shopping-cart"></span>
+						            <spring:message code="cart.btn" />
+						            <c:if test="${cartItemCount > 0}">
+						                <span class="badge cart-badge">${cartItemCount}</span>
+						            </c:if>
+						        </a>
+						    </c:when>
+						    <c:otherwise>
+						        <a href="/online-store.web/signin" class="btn btn-default cart-btn">
+						            <span class="glyphicon glyphicon-shopping-cart"></span>
+						            <spring:message code="cart.btn" />
+						        </a>
+						    </c:otherwise>
+						</c:choose>
+					
 						<div class="login-sr">
 							<div class="login-signup">
 								<ul>

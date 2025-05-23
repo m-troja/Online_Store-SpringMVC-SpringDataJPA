@@ -37,10 +37,10 @@ public class Product {
 	@Column(name = "guid")
 	private String guid;
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getProductName() {
@@ -78,6 +78,11 @@ public class Product {
 	}
 	public String getGuid() {
 		return this.guid;
+	}
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", productName=" + productName + ", price=" + price + ", category=" + category
+				+ ", imgName=" + imgName + ", description=" + description + ", guid=" + guid + "]";
 	}
 
 }

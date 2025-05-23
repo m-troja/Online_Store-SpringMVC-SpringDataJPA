@@ -17,6 +17,7 @@ public class MainWebAppInitializer implements WebApplicationInitializer {
 
 	@Override
 	public void onStartup(final ServletContext sc) throws ServletException {
+		
 		var ctx = new AnnotationConfigWebApplicationContext();
 		ctx.register(WebConfig.class);
 		sc.addListener(new ContextLoaderListener(ctx));
@@ -27,7 +28,6 @@ public class MainWebAppInitializer implements WebApplicationInitializer {
 		appServlet.addMapping("/");
 		appServlet.setInitParameter("throwExceptionIfNoHandlerFound", "true");
 		
-
 		sc.addFilter("securityFilter", new DelegatingFilterProxy("springSecurityFilterChain"))
         	.addMappingForUrlPatterns(null, false, "/*");
 		

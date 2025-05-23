@@ -53,7 +53,7 @@
                      <h4>Price</h4>
                      <h3>$${product.price}</h3>
                      <c:if test="${not empty loggedInUser}">
-                     	<a href="checkout?guid=${product.guid}">Buy</a>
+                     	<a href="cart/add?guid=${product.guid}">Buy</a>
                      </c:if>
                      <c:if test="${empty loggedInUser}">
                      	<a href="signin">Buy</a>

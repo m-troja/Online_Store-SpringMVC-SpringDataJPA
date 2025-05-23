@@ -44,4 +44,9 @@ public class Category
 		return this.imgName;
 	}
 
+	@Override
+	public String toString() {
+		return "Category [id=" + id + ", categoryName=" + categoryName + ", imgName=" + imgName + "]";
+	}
+
 }

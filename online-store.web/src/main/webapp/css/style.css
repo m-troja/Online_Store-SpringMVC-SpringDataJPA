@@ -3468,3 +3468,71 @@ html .ui-button.ui-state-disabled:active {
 	width:100%;
 }
 
+
+.cart-btn {
+    margin-left: 15px;
+    margin-top: 15px;
+    position: relative;
+}
+
+.cart-badge {
+    position: absolute;
+    top: 0px;
+    right: -5px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 3px 7px;
+    font-size: 12px;
+}
+
+/* Kontener summary */
+.cart-summary-box {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    max-width: 100%;
+}
+
+/* Tabela */
+.order-table th, .order-table td {
+    vertical-align: middle;
+    padding: 10px;
+}
+
+/* Przycisk Place Order i Clear Cart na pełną szerokość kontenera */
+.btn-order, .btn-clear {
+    width: 100%;
+}
+
+/* Mały odstęp między przyciskami */
+.cart-summary-box form + form {
+    margin-top: 8px;
+}
+
+/* Nagłówek */
+.prod-page-title h2 {
+    margin-bottom: 20px;
+}
+
+.btn-remove {
+    padding: 6px 12px;
+    font-size: 14px;
+    border: none;
+    background-color: #dc3545;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-remove:hover {
+    background-color: #c82333;
+}
+
+.order-table td:last-child {
+    text-align: center;
+    vertical-align: middle;
+}
