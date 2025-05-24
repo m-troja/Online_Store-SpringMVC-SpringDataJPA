@@ -3,6 +3,7 @@ package com.itbulls.learnit.onlinestore.persistence.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.itbulls.learnit.onlinestore.persistence.entities.Cart;
 
@@ -22,18 +24,15 @@ public class Cart {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name="cart_product",
-	   joinColumns=@JoinColumn(name="cart_id"),
-	   inverseJoinColumns=@JoinColumn(name="product_id"))
-	private List<Product> products;
+	@OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	private List<CartItem> items;
 	
 	@ManyToOne
 	@JoinColumn(name = "fk_cart_user")
 	private User user;
 	
 	{
-		products = new ArrayList<>();
+		items = new ArrayList<>();
 	}
 	
 	public Integer getId() {
@@ -52,32 +51,36 @@ public class Cart {
 		this.user = user;
 	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setProducts(List<CartItem> products) {
+		this.items = products;
+	}
+
+	public void setItems(List<CartItem> items) {
+		this.items = items;
 	}
 
 	public boolean isEmpty() {
-		return products.isEmpty();
+		return items.isEmpty();
 	}
 
-	public void addProduct(Product product) {
-		if (product == null) {
+	public void addItem(CartItem item) {
+		if (item == null) {
 			return;
 		}
-		products.add(product);
+		items.add(item);
 	}
 
-	public List<Product> getProducts() {
-		return this.products;
+	public List<CartItem> getItems() {
+		return this.items;
 	}
 
 	public void clear() {
-		products.clear();
+		items.clear();
 	}
 
-	public Cart(List<Product> products, User user) {
+	public Cart(List<CartItem> items, User user) {
 		super();
-		this.products = products;
+		this.items = items;
 		this.user = user;
 	}
 
@@ -87,7 +90,9 @@ public class Cart {
 
 	@Override
 	public String toString() {
-		return "Cart [id=" + id + ", products=" + products + ", user=" + user + "]";
+	    return "Cart [id=" + id + ", itemsCount=" + (items != null ? items.size() : 0) +
+	           ", user=" + user + "]";
 	}
+
 
 }

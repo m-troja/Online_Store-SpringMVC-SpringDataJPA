@@ -141,8 +141,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "UserDto [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				 + ", money=" + money + ", creditCard=" + creditCard + ", password=" + password
-				+ ", partnerCode=" + partnerCode + ", referrerUser=" + referrerUser + "]";
+				 + ", money=" + money  + "]";
 	}
 	
 	

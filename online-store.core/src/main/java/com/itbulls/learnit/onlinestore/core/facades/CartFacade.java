@@ -6,13 +6,14 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.itbulls.learnit.onlinestore.persistence.entities.Cart;
+import com.itbulls.learnit.onlinestore.persistence.entities.CartItem;
 import com.itbulls.learnit.onlinestore.persistence.entities.Product;
 import com.itbulls.learnit.onlinestore.persistence.entities.User;
 
 @Service
 public interface CartFacade {
 
-	void createCart(List<Product> products, User user);
+	void createCart(List<CartItem> items, User user);
 
 	void addToCart(User user, Product product);
 
@@ -24,7 +25,9 @@ public interface CartFacade {
 	 
 	 public BigDecimal calculatePriceOfCart(Cart cart);
 	 
-	 Cart removeProductFromCart(Integer cartId, Integer productId);
+	 Cart removeItemFromCart(Integer cartId, Integer itemId);
 	 
 	 Integer getSizeOfCart(Cart cart);
+	 
+	 Integer getQtyOfItemInCart(Cart cart, Product product);
 }
