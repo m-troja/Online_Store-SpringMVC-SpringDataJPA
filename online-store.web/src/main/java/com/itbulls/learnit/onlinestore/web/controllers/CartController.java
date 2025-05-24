@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itbulls.learnit.onlinestore.core.facades.CartFacade;
 import com.itbulls.learnit.onlinestore.core.facades.ProductFacade;
+import com.itbulls.learnit.onlinestore.core.facades.impl.CartItemFacade;
 import com.itbulls.learnit.onlinestore.persistence.entities.Cart;
+import com.itbulls.learnit.onlinestore.persistence.entities.CartItem;
 import com.itbulls.learnit.onlinestore.persistence.entities.Product;
 import com.itbulls.learnit.onlinestore.persistence.entities.User;
 
@@ -34,6 +36,7 @@ public class CartController {
 	
 	@Autowired
 	private CartFacade cartFacade;
+
 	
 	@GetMapping()
 	public String doGet( HttpSession session) {
@@ -71,22 +74,14 @@ public class CartController {
 	}
 	
 	@PostMapping(value = "/remove")
-	public String remove(@RequestParam("productId") Integer productId, HttpSession session, Integer cartId) {
+	public String remove(@RequestParam("itemId") Integer itemId, HttpSession session, @RequestParam("cartId") Integer cartId) {
 		
-		Cart freshCart = cartFacade.findCartById(cartId);
-		System.out.println("freshCart from DB: " + freshCart.getProducts());
-
+		System.out.println("In CartController remove...");
 		
-		System.out.println("productId : " + productId );
-		System.out.println("cartId : " + cartId );
-
-		
-		Cart newCart = cartFacade.removeProductFromCart(cartId, productId);
+		System.out.println("Calling  removeItemFromCart with params itemId " +  itemId + "  cartId  " +  cartId  );
 		
 		
-	
-		
-
+		Cart newCart = cartFacade.removeItemFromCart(cartId, itemId);
 		
 		BigDecimal price = cartFacade.calculatePriceOfCart(newCart);
 

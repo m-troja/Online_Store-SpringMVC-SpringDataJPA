@@ -6,22 +6,24 @@
         <thead>
             <tr>
                 <th>Product name</th>
+                <th>Quantity</th>
                 <th>Price</th>
-                <th>Action</th>
+                <th>Remove from cart</th>
             </tr>
         </thead>
         <tbody>
             <c:set var="total" value="0" scope="page" />
-            <c:forEach items="${cart.products}" var="product">
+            <c:forEach items="${cart.items}" var="item">
                 <tr>
-                    <td>${product.productName}</td>
+                    <td>${item.product.productName}</td>
+                    <td>${item.quantity}</td>
                     <td>
-                        <fmt:formatNumber value="${product.price}" type="number" />
-                        <c:set var="total" value="${total + product.price}" scope="page" />
+                        <fmt:formatNumber value="${item.product.price}" type="number" />
+                        <c:set var="total" value="${total}" scope="page" />
                     </td>
                     <td class="text-center align-middle">
                         <form action="cart/remove" method="POST">
-                            <input type="hidden" name="productId" value="${product.id}" />
+                            <input type="hidden" name="itemId" value="${item.id}" />
                             <input type="hidden" name="cartId" value="${cart.id}" />
                             <button type="submit" class="btn btn-danger btn-remove">
 							    Remove

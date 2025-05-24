@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.itbulls.learnit.onlinestore.persistence.entities.Cart;
-import com.itbulls.learnit.onlinestore.persistence.entities.Product;
+import com.itbulls.learnit.onlinestore.persistence.entities.CartItem;
 import com.itbulls.learnit.onlinestore.persistence.entities.User;
 
 @Repository
@@ -16,9 +16,12 @@ public interface JpaCartRepo extends CrudRepository<Cart, Integer>{
 
 	Optional<Cart> findById(Integer cartId);
 	
-	@Query("SELECT c.products FROM Cart c WHERE c.id = ?1")
-	List<Product> findProductsByCartId(Integer cartId);
+	@Query("SELECT c.items FROM Cart c WHERE c.id = ?1")
+	List<CartItem> findItemsByCartId(Integer cartId);
 	 
 	Cart findByUser(User user);
+	
+	@Query("SELECT count(c.items) from Cart c ")
+	Integer findProductInCart(Cart cart, CartItem item);
 	
 }

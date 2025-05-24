@@ -24,7 +24,7 @@
         </div>
        <div class="row d-flex align-items-start">
     <c:choose>
-        <c:when test="${not empty cart.products}">
+        <c:when test="${not empty cart.items}">
             <div class="col-md-8">
                 <shop:cart-table/>
             </div>
