@@ -1,0 +1,13 @@
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             version="2.1">
+    <persistence-unit name="defaultPersistenceUnit">
+        <class>com.itbulls.learnit.onlinestore.persistence.entities.Cart</class>
+        <!-- inne encje... -->
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>

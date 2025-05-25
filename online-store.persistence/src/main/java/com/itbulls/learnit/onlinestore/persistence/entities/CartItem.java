@@ -25,7 +25,7 @@ public class CartItem {
 
 	@ManyToOne
 	@JoinColumn(name = "cart_id")
-	public Cart cart;
+	private Cart cart;
 	
 	public CartItem(Product product, Integer quantity) {
 		super();
@@ -80,5 +80,17 @@ public class CartItem {
 	           ", cartId=" + (cart != null ? cart.getId() : null) + "]";
 	}
 	
+	@Override
+	public boolean equals(Object o) {
+	    if (this == o) return true;
+	    if (!(o instanceof CartItem)) return false;
+	    CartItem that = (CartItem) o;
+	    return id != null && id.equals(that.getId());
+	}
+
+	@Override
+	public int hashCode() {
+	    return 31;
+	}
 
 }
