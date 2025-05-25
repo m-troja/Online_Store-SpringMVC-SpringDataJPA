@@ -20,4 +20,6 @@ public interface PurchaseFacade {
 	void markFulfilmentStageForPurchaseIdAsCompleted(Integer purchaseId);
 	
 	Purchase getPurchaseById(Integer purhcaseId);
+	
+	List<Purchase> getPurchasesByUserId(Integer userId);
 }

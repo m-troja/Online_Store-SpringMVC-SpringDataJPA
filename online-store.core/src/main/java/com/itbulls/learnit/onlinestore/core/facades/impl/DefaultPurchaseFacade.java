@@ -105,5 +105,10 @@ public class DefaultPurchaseFacade implements PurchaseFacade {
 	{
 		return purchaseRepo.findById(purchaseId).orElse(null);
 	}
+	
+	public List<Purchase> getPurchasesByUserId(Integer userId)
+	{
+		return purchaseRepo.findByUserId(userId);
+	}
 
 }

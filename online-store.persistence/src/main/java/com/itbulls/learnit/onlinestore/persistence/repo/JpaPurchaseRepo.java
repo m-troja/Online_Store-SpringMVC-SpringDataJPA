@@ -17,7 +17,5 @@ public interface JpaPurchaseRepo extends CrudRepository<Purchase,Integer>{
 	
 	@Query("SELECT p FROM Purchase p WHERE p.purchaseStatus.id != ?1")
 	 List<Purchase> getNotCompletedPurchases(Integer stageId);
-	 
-	
 	
 }
