@@ -2,6 +2,7 @@ package com.itbulls.learnit.onlinestore.core.facades;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import com.itbulls.learnit.onlinestore.persistence.entities.User;
 @Service
 public interface CartFacade {
 
-	void createCart(List<CartItem> items, User user);
+	void createCart(Set<CartItem> items, User user);
 
 	void addToCart(User user, Product product);
 

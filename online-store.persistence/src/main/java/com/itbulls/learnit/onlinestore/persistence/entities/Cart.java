@@ -2,6 +2,7 @@ package com.itbulls.learnit.onlinestore.persistence.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -25,15 +26,12 @@ public class Cart {
 	private Integer id;
 	
 	@OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-	private List<CartItem> items;
+	private Set<CartItem> items;
 	
 	@ManyToOne
 	@JoinColumn(name = "fk_cart_user")
 	private User user;
-	
-	{
-		items = new ArrayList<>();
-	}
+
 	
 	public Integer getId() {
 		return id;
@@ -51,11 +49,11 @@ public class Cart {
 		this.user = user;
 	}
 
-	public void setProducts(List<CartItem> products) {
+	public void setProducts(Set<CartItem> products) {
 		this.items = products;
 	}
 
-	public void setItems(List<CartItem> items) {
+	public void setItems(Set<CartItem> items) {
 		this.items = items;
 	}
 
@@ -68,9 +66,15 @@ public class Cart {
 			return;
 		}
 		items.add(item);
-	}
+	    item.setCart(this);
 
-	public List<CartItem> getItems() {
+	}
+	public void removeItem(CartItem item) {
+	    items.remove(item);
+	    item.setCart(null);
+	}
+	
+	public Set<CartItem> getItems() {
 		return this.items;
 	}
 
@@ -78,7 +82,7 @@ public class Cart {
 		items.clear();
 	}
 
-	public Cart(List<CartItem> items, User user) {
+	public Cart(Set<CartItem> items, User user) {
 		super();
 		this.items = items;
 		this.user = user;

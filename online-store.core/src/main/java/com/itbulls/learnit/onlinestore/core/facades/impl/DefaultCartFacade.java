@@ -2,8 +2,10 @@ package com.itbulls.learnit.onlinestore.core.facades.impl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +42,7 @@ public class DefaultCartFacade implements CartFacade {
 			System.out.println( " cartRepo.findByUser(user) == null" );
 
 			// No existing cart - save a new cart for user
-			List<CartItem> items = new ArrayList<>();
+			Set<CartItem> items = new HashSet<>();
 			CartItem item = new CartItem(product, 1);
 			
 			items.add(item);
@@ -57,7 +59,7 @@ public class DefaultCartFacade implements CartFacade {
 
 //			Get user's cart
 			Cart cart = cartRepo.findByUser(user);
-			List<CartItem> itemsInCart = cart.getItems();
+			Set<CartItem> itemsInCart = cart.getItems();
 			
 //			If Cart contains same product as user wants to add now, increment item's quantity by 1
 			for (CartItem item : itemsInCart )
@@ -98,7 +100,7 @@ public class DefaultCartFacade implements CartFacade {
 	}
 	
 	@Override
-	public void createCart(List<CartItem> items, User user) {
+	public void createCart(Set<CartItem> items, User user) {
 		Cart cart = new Cart();
 		cart.setUser(user);
 		
@@ -136,7 +138,7 @@ public class DefaultCartFacade implements CartFacade {
 
 	public BigDecimal calculatePriceOfCart(Cart cart)
 	{
-		List<CartItem> items = cart.getItems();
+		Set<CartItem> items = cart.getItems();
 		BigDecimal priceOfProduct = BigDecimal.ZERO;
 		BigDecimal total = BigDecimal.ZERO;
 		
@@ -152,77 +154,59 @@ public class DefaultCartFacade implements CartFacade {
 		return total;
 	}
 	
-	public Cart removeItemFromCart(Integer cartId, Integer itemId)
-	{
-		System.out.println("in removeItemFromCart... ");
-		
-		Cart cart = findCartById(cartId);
-		System.out.println("cart from DB: " + cart.toString());
-		
-		List<CartItem> items = cart.getItems();
-		
-		System.out.println("items before removing : " + items.toString());
-		
-		CartItem itemToRemove = null;
-		
-		// Get item to remove from cart
-		for ( CartItem item : items)
-		{
-			System.out.println("in for each loop...");
-			System.out.println("itemToRemove.id = " + item.getId() +  " , itemId = " + itemId);
-			System.out.println("itemToRemove qty = " + item.getQuantity() );
-			
-//			
-			if ( item.getId().equals(itemId) )
-			{	
-				System.out.println("inside itemToRemove.getId() == itemId ");
-				
-				// If quantity of item is 1, remove item from cart
-				if ( item.getQuantity().equals(1) )
-				{
-					System.out.println("Qty of item = 1 ! Item removed.");
+	public Cart removeItemFromCart(Integer cartId, Integer itemId) {
+	    System.out.println("in removeItemFromCart... ");
 
-					itemToRemove = item;
+	    Cart cart = findCartById(cartId);
+	    if (cart == null) {
+	        System.out.println("Cart not found with id: " + cartId);
+	        return new Cart();
+	    }
+	    System.out.println("cart from DB: " + cart.toString());
 
-					System.out.println("items after removing : " + items.toString());
-					System.out.println("Size of cart after removeItemFromCart: " + getSizeOfCart(cart) );
-					
-				}
-				
-				// Else decrement quantity of item by 1
-				else 
-				{
-					item.setQuantity(item.getQuantity() - 1);
-					System.out.println("Qty decremented! New qty = " + item.getQuantity());
-					
-					cart.setItems(items);
-					System.out.println("items after removing : " + items.toString());
-					System.out.println("Size of cart after removeItemFromCart: " + getSizeOfCart(cart) );
-					
+	    Set<CartItem> items = cart.getItems();
+	    System.out.println("items before removing : " + items.toString());
 
-					cartItemRepo.save(item);
-					cartRepo.save(cart);
-					
-					return cart;
-				}
-			}
-			else {
-				System.out.println("inside else, loop: CartItem itemToRemove : items");
+	    Iterator<CartItem> iterator = items.iterator();
+	    while (iterator.hasNext()) {
+	        CartItem item = iterator.next();
 
-			}
-			
-//			Remove item from cart, if its quantity is 1
-			if (itemToRemove != null)
-			{
-				System.out.println("itemToRemove " +  itemToRemove.toString());
-				items.remove(itemToRemove);
-				cartItemRepo.delete(itemToRemove);
-				cartRepo.save(cart);
-				return cart;
-			}
-		}
-		return null;
+	        System.out.println("in iterator loop...");
+	        System.out.println("item.id = " + item.getId() + ", itemId = " + itemId);
+	        System.out.println("item qty = " + item.getQuantity());
+
+	        if (item.getId().equals(itemId)) {
+	            System.out.println("inside item.getId() == itemId");
+
+	            if (item.getQuantity().equals(1)) {
+	                System.out.println("Qty of item = 1! Removing item from cart.");
+	                cart.removeItem(item);
+	                
+	            } else {
+	                item.setQuantity(item.getQuantity() - 1);
+	                System.out.println("Qty decremented! New qty = " + item.getQuantity());
+
+	                cartItemRepo.save(item);
+	                cartRepo.save(cart);
+
+	                return cart;
+	            }
+	            break; // item found, no need to continue looping
+	        } else {
+	            System.out.println("inside else, loop: CartItem item does not match itemId");
+	        }
+	    }
+
+	    // Save cart after possible removal
+	    cartRepo.save(cart);
+
+	    System.out.println("items after removing: " + cart.getItems().toString());
+	    System.out.println("Size of cart after removeItemFromCart: " + getSizeOfCart(cart));
+
+	    return cart;
 	}
+
+	
 	
 	public Integer getSizeOfCart(Cart cart)
 	{
@@ -233,6 +217,7 @@ public class DefaultCartFacade implements CartFacade {
 	{
 		return cartItemRepo.countByCartAndProduct(cart, product);
 	}
+
 
 
 }

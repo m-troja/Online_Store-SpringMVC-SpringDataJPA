@@ -147,6 +147,7 @@ public class WebConfig implements WebMvcConfigurer {
 		properties.setProperty(PROPERTY_DIALECT, environment.getProperty(PROPERTY_DIALECT));
 		properties.setProperty(PROPERTY_SHOW_SQL, environment.getProperty(PROPERTY_SHOW_SQL));
 		properties.setProperty("hibernate.hbm2ddl.auto", "update");
+		properties.setProperty("hibernate.use_sql_comments", "true");
 
 		return properties;
 	}
