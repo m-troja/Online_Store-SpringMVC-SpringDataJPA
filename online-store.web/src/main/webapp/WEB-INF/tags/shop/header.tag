@@ -5,12 +5,12 @@
 
 
 <header id="header" class="top-head">
+
 	<!-- Static navbar -->
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-4 col-sm-12 left-rs">
-
 				
 					<div class="navbar-header">
 						<button type="button" id="top-menu"
@@ -34,8 +34,27 @@
 					</form>
 
 				</div>
+				
 				<div class="col-md-8 col-sm-12">							
 					<div class="right-nav">
+					
+					<!-- My orders button -->
+					<c:choose>
+						    <c:when test="${loggedInUser != null}">
+						        <a href="/online-store.web/my-orders" class="btn btn-default cart-btn position-relative">
+						            <span class="glyphicon glyphicon-list-alt"></span>
+						            <spring:message code="my.orders.btn" />
+						        </a>
+						    </c:when>
+						    
+						    <c:otherwise>
+						        <a href="/online-store.web/signin" class="btn btn-default cart-btn">
+						            <span class="glyphicon glyphicon-list-alt"></span>
+						            <spring:message code="my.orders.btn" />
+						        </a>
+						    </c:otherwise>
+						</c:choose>
+					
 					
 					<!-- Cart button with badge -->
 						<c:choose>

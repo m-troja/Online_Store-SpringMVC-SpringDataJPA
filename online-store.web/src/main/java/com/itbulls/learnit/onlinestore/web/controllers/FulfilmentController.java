@@ -7,12 +7,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itbulls.learnit.onlinestore.core.facades.PurchaseFacade;
 import com.itbulls.learnit.onlinestore.persistence.entities.Purchase;
 
 @Controller
+@RequestMapping
 public class FulfilmentController {
 	
 	@Autowired
@@ -24,6 +26,8 @@ public class FulfilmentController {
 			.markFulfilmentStageForPurchaseIdAsCompleted(purchaseId);
 		return "redirect:/management-fulfilment"; 
 	}
+	
+	
 	@GetMapping("/management-fulfilment")
 	public String doGet(Model model)
 	{

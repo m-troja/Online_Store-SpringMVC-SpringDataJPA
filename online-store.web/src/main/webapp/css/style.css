@@ -3536,3 +3536,24 @@ html .ui-button.ui-state-disabled:active {
     text-align: center;
     vertical-align: middle;
 }
+
+.my-orders-btn {
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    color: #333;
+    font-weight: 500;
+    padding: 10px 15px; /* Match the Cart button's padding */
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.my-orders-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.my-orders-icon {
+    font-size: 18px;
+    margin-right: 6px;
+}
+

@@ -57,6 +57,12 @@
 							<fmt:message key="signin.button" bundle="${rb}"/>
 								</button>
 							</div>
+							<c:if test="${param.error == 'true' }">
+								<div>
+									Error during logging!
+								</div>
+							</c:if>
+							
 						</div>
 	
 						<div class="text-center p-t-115">

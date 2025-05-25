@@ -18,6 +18,7 @@ import com.itbulls.learnit.onlinestore.core.facades.UserFacade;
 import com.itbulls.learnit.onlinestore.persistence.entities.Privilege;
 import com.itbulls.learnit.onlinestore.persistence.entities.Role;
 import com.itbulls.learnit.onlinestore.persistence.entities.User;
+
 @Transactional
 public class DefaultUserDetailsService implements UserDetailsService 
 {
@@ -31,11 +32,25 @@ public class DefaultUserDetailsService implements UserDetailsService
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException 
 	{
 		User user = userRepository.getUserByEmail(email);
-		LOGGER.info("=== In DefaultUserDetailsService loadUserByUsername ===");
-		LOGGER.info("=== DefaultUserDetailsService user.getRoles().toString = "  + user.getRoles().toString());
+		
+		  if (user == null) {
+		        LOGGER.warn("No user found with email: {}", email);
+		        throw new UsernameNotFoundException("User not found with email: " + email);
+		    }
 
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
-				user.getEnabled(), true, true, true, getAuthorities(user.getRoles()));
+		    LOGGER.info("=== In DefaultUserDetailsService loadUserByUsername ===");
+		    LOGGER.info("=== User roles: {}", user.getRoles());
+
+
+		    return new org.springframework.security.core.userdetails.User(
+		            user.getEmail(),
+		            user.getPassword(),
+		            user.getEnabled(),
+		            true,
+		            true,
+		            true,
+		            getAuthorities(user.getRoles())
+		        );
 	}
 	
 	private Collection<? extends GrantedAuthority> getAuthorities(Set<Role> roles) 
