@@ -1,5 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${pageContext.request.locale}" scope="session" />
+
 
 <header id="header" class="top-head">
 	<!-- Static navbar -->
@@ -7,6 +10,8 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-4 col-sm-12 left-rs">
+
+				
 					<div class="navbar-header">
 						<button type="button" id="top-menu"
 							class="navbar-toggle collapsed" data-toggle="collapse"
@@ -65,6 +70,9 @@
 								</ul>
 							</div>
 						</div>
+						
+						<!-- Locale / Language -->
+						
 						<div class="help-r hidden-xs">
 							<div class="help-box">
 								<ul>
@@ -96,7 +104,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Change</h4>
+				<h4 class="modal-title"><spring:message code="change"/></h4>
 			</div>
 			<div class="modal-body">
 				<ul>
@@ -112,8 +120,8 @@
 </div>
 <div id="sidebar" class="top-nav">
 	<ul id="sidebar-nav" class="sidebar-nav">
-		<li><a href="#">Help</a></li>
-		<li><a href="#">How it works</a></li>
-		<li><a href="#">Chamb for Business</a></li>
+		<li><a href="#"><spring:message code="help"/></a></li>
+		<li><a href="#"><spring:message code="how.it.works"/></a></li>
+		<li><a href="#"><spring:message code="chamb.for.business"/></a></li>
 	</ul>
 </div>

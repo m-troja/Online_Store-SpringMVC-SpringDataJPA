@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 
 <div class="profile-pro-left">
@@ -9,6 +10,6 @@
 		<div class="pof-text">
 			<h3>${loggedInUser.firstName} ${loggedInUser.lastName}</h3>
 		</div>
-		<a href="edit-profile">Edit</a>
+		<a href="edit-profile"><spring:message code="profile.edit" /></a>
 	</div>
 </div>

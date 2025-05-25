@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
+
 <html lang="en">
 
 <head>
@@ -19,9 +22,9 @@
 		<div class="notfound">
 			<div class="notfound-404">
 				<h1>Oops!</h1>
-				<h2>404 - The Page can't be found</h2>
+				<h2><spring:message code="error.not.found" /></h2>
 			</div>
-			<a href="homepage">Go TO Homepage</a>
+			<a href="homepage"><spring:message code="error.go.to.homepage" /></a>
 		</div>
 	</div>
 

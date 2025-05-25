@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +38,6 @@ public class CartController {
 	
 	@Autowired
 	private CartFacade cartFacade;
-
 	
 	@GetMapping()
 	public String doGet( HttpSession session) {
@@ -51,6 +52,7 @@ public class CartController {
 			
 			System.out.println("GET Cart : " + cart.toString());
 			System.out.println("GET Cart getSizeOfCart : " + cartFacade.getSizeOfCart(cart));
+			
 			return "cart";
 		}
 		else 
@@ -64,6 +66,8 @@ public class CartController {
 	@GetMapping(value = "/add")
 	public String add(@RequestParam("guid") String productGuid, HttpSession session) {
 		
+		User user = (User) session.getAttribute(SignInController.LOGGED_IN_USER_ATTR);
+		
 		cartFacade.addToCart(
 				(User) session.getAttribute(SignInController.LOGGED_IN_USER_ATTR),
 				productFacade.getProductByGuid(productGuid));
@@ -75,7 +79,7 @@ public class CartController {
 	
 	@PostMapping(value = "/remove")
 	public String remove(@RequestParam("itemId") Integer itemId, HttpSession session, @RequestParam("cartId") Integer cartId) {
-		
+
 		System.out.println("In CartController remove...");
 		
 		System.out.println("Calling  removeItemFromCart with params itemId " +  itemId + "  cartId  " +  cartId  );
@@ -88,8 +92,29 @@ public class CartController {
 		System.out.println("Size of cart sent to JSP : " + cartFacade.getSizeOfCart(newCart) );
 		session.setAttribute("cart", newCart);
 		session.setAttribute("price", price);
+
 		
 		return "redirect:/cart" ;
 	}
+	
+	@PostMapping(value = "/clear")
+	public String doClear(@RequestParam Integer cartId, HttpSession session)
+	{
+		User user = (User) session.getAttribute(SignInController.LOGGED_IN_USER_ATTR);
 
+		if (cartFacade.findCartById(cartId) == null)
+		{
+			session.setAttribute("cart", cartFacade.findByUser(user) );
+
+			return "redirect:/homepage";
+		}
+		
+
+		cartFacade.deleteCart(cartId);
+		
+		session.setAttribute("cart", cartFacade.findByUser(user) );
+
+		return "redirect:/cart";
+	}
+	
 }

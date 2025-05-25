@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -32,7 +33,6 @@ public class Cart {
 	@JoinColumn(name = "fk_cart_user")
 	private User user;
 
-	
 	public Integer getId() {
 		return id;
 	}

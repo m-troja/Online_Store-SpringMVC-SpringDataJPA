@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="shop" tagdir="/WEB-INF/tags/shop"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
+
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -26,8 +29,8 @@
                      <div class="panel with-nav-tabs panel-default">
                         <div class="panel-heading clearfix">
                            <ul class="nav nav-tabs pull-left">
-                              <li class="active"><a href="#tab1default" data-toggle="tab">Personal Info</a></li>
-                              <li><a href="#tab2default" data-toggle="tab">Referrals</a></li>
+                              <li class="active"><a href="#tab1default" data-toggle="tab"><spring:message code="personal.info" /></a></li>
+                              <li><a href="#tab2default" data-toggle="tab"><spring:message code="referrals" /></a></li>
                            </ul>
                            
                         </div>

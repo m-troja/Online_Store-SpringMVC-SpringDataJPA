@@ -31,4 +31,8 @@ public interface CartFacade {
 	 Integer getSizeOfCart(Cart cart);
 	 
 	 Integer getQtyOfItemInCart(Cart cart, Product product);
+	 
+	 void deleteCart(Integer cartId);
+	 
+	 Integer getNumberOfProductsInCart(Cart cart);
 }

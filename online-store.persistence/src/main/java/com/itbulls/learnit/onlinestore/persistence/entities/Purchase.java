@@ -2,10 +2,11 @@ package com.itbulls.learnit.onlinestore.persistence.entities;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,11 +28,11 @@ public class Purchase {
 	@JoinColumn(name = "fk_purchase_user")
 	private User user;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name="purchase_product",
 	   joinColumns=@JoinColumn(name="purchase_id"),
 	   inverseJoinColumns=@JoinColumn(name="product_id"))
-	private List<Product> products;
+	private Set<Product> products;
 	
 	@ManyToOne
 	@JoinColumn(name = "fk_purchase_purchase_status")
@@ -59,10 +60,10 @@ public class Purchase {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public List<Product> getProducts() {
+	public Set<Product> getProducts() {
 		return products;
 	}
-	public void setProducts(List<Product> products) {
+	public void setProducts(Set<Product> products) {
 		this.products = products;
 	}
 	public PurchaseStatus getPurchaseStatus() {
