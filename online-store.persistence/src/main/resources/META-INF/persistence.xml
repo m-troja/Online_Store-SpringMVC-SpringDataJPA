@@ -1,7 +1,7 @@
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
              version="2.1">
     <persistence-unit name="defaultPersistenceUnit">
-        <class>com.itbulls.learnit.onlinestore.persistence.entities.Cart</class>
+        <class>com.michal.onlinestore.persistence.entities.Cart</class>
         <!-- inne encje... -->
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>

@@ -5,7 +5,7 @@
 
 	<tag>
 		<name>helloTag</name>
-		<tag-class>com.itbulls.learnit.onlinestore.web.tags.HelloTagHandler
+		<tag-class>com.michal.onlinestore.web.tags.HelloTagHandler
 		</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
@@ -20,7 +20,7 @@
 
 	<tag>
 		<name>coloredListItems</name>
-		<tag-class>com.itbulls.learnit.onlinestore.web.tags.DynamicAttributesTagHandler
+		<tag-class>com.michal.onlinestore.web.tags.DynamicAttributesTagHandler
 		</tag-class>
 		<body-content>empty</body-content>
 		<dynamic-attributes>true</dynamic-attributes>
