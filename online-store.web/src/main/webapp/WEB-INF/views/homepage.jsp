@@ -1,19 +1,18 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="shop" tagdir="/WEB-INF/tags/shop"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+
 <!DOCTYPE html>
 <html lang="en">
    <head>
       <meta charset="UTF-8">
-      <title>Nice Sofa - Online Store</title>
-      
+      <title><spring:message code="title.online.store"/></title>
       <shop:css-imports-main/>
-      
    </head>
    <body>
-      
       <shop:header/>
-      
       <shop:categories-tiles/>
-      
       <div class="cat-main-box">
          <div class="container">
             <div class="row panel-row">
@@ -21,10 +20,8 @@
                   <div class="panel panel-default">
                      <div class="panel-body">
                         <img src="images/xpann-icon.jpg" class="icon-small" alt="">
-                        <h4>Chamb Your Business</h4>
-                        <p>Grow easily with chamb. Create free account.
-                           We help expanding your business easily.
-                        </p>
+                        <h4><spring:message code="home.chamb.business"/></h4>
+                        <p><spring:message code="home.chamb.business.desc"/></p>
                      </div>
                   </div>
                </div>
@@ -32,10 +29,8 @@
                   <div class="panel panel-default">
                      <div class="panel-body">
                         <img src="images/create-icon.jpg" class="icon-small" alt="">
-                        <h4>Create and add</h4>
-                        <p>Grow easily with chamb. Create free account.
-                           We help expanding your business easily.
-                        </p>
+                        <h4><spring:message code="home.create.add"/></h4>
+                        <p><spring:message code="home.chamb.business.desc"/></p>
                      </div>
                   </div>
                </div>
@@ -43,10 +38,8 @@
                   <div class="panel panel-default">
                      <div class="panel-body">
                         <img src="images/get-icon.jpg" class="icon-small" alt="">
-                        <h4>Get inspired</h4>
-                        <p>Grow easily with chamb. Create free account.
-                           We help expanding your business easily.
-                        </p>
+                        <h4><spring:message code="home.get.inspired"/></h4>
+                        <p><spring:message code="home.chamb.business.desc"/></p>
                      </div>
                   </div>
                </div>
@@ -59,9 +52,7 @@
                <div class="col-md-6 col-sm-6 wow fadeIn" data-wow-delay="0.2s">
                   <div class="exciting_box f_pd">
                      <img src="images/exciting_img-01.jpg" class="icon-small" alt="" />
-                     <h4>Explore <strong>exciting</strong> and exotic products
-                        tailored to you.
-                     </h4>
+                     <h4><spring:message code="home.explore.products"/></h4>
                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
                         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
                         quis nostrud exercitation ullamco laboris..
@@ -71,7 +62,7 @@
                <div class="col-md-6 col-sm-6 wow fadeIn" data-wow-delay="0.4s">
                   <div class="exciting_box l_pd">
                      <img src="images/exciting_img-02.jpg" class="icon-small" alt="" />
-                     <h4><strong>List your products on</strong> chamb and grow connections.</h4>
+                     <h4><spring:message code="home.list.products"/></h4>
                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
                         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
                         quis nostrud exercitation ullamco laboris..
@@ -89,15 +80,12 @@
                      <div class="free-box-a clearfix">
                         <div class="col-md-6 col-sm-6">
                            <div class="left-a-f">
-                              <h3>A platform built for scale & expansion. Start for free.</h3>
+                              <h3><spring:message code="home.platform.intro"/></h3>
                            </div>
                         </div>
                         <div class="col-md-6 col-sm-6">
                            <div class="right-a-f">
-                              <p>Over the comming years, way thet business through the web
-                                 works will change at agreat - and chamb is the
-                                 gamebreaker.
-                              </p>
+                              <p><spring:message code="home.platform.desc"/></p>
                            </div>
                         </div>
                      </div>
@@ -116,16 +104,12 @@
                         </div>
                         <div class="col-md-6 col-sm-6 wow fadeIn" data-wow-delay="0.4s">
                            <div class="right-buyer">
-                              <h4>buyer</h4>
-                              <h2>Empower your factory<br>
-                                 <span>With a new lead Channel</span>
+                              <h4><spring:message code="home.buyer.title"/></h4>
+                              <h2><spring:message code="home.buyer.heading"/><br>
+                                 <span><spring:message code="home.buyer.subheading"/></span>
                               </h2>
-                              <p>Never worry about sales or income ftom outbound
-                                 channels. with chamb your store is directly
-                                 connected to thousands of interested in your
-                                 products.
-                              </p>
-                              <a href="#">Create a buyer account</a>
+                              <p><spring:message code="home.buyer.desc"/></p>
+                              <a href="#"><spring:message code="home.buyer.cta"/></a>
                            </div>
                         </div>
                      </div>
@@ -139,15 +123,10 @@
                      <div class="supplier clearfix">
                         <div class="col-md-5 col-sm-6">
                            <div class="left-supplier">
-                              <h4>supplier</h4>
-                              <h2>Grow your store <br><span>With a new sales channel</span></h2>
-                              <p>Never worry about sales or income ftom outbound
-                                 channels. with chamb your store is directly
-                                 connected to thousands of interested in your
-                                 products.
-                              </p>
-                              .
-                              <a href="#">Create a supplier account</a>
+                              <h4><spring:message code="home.supplier.title"/></h4>
+                              <h2><spring:message code="home.supplier.heading"/><br><span><spring:message code="home.supplier.subheading"/></span></h2>
+                              <p><spring:message code="home.supplier.desc"/></p>
+                              <a href="#"><spring:message code="home.supplier.cta"/></a>
                            </div>
                         </div>
                         <div class="col-md-7 col-sm-6">
@@ -161,11 +140,7 @@
             </div>
          </div>
       </div>
-      
-      
-      
       <shop:footer/>
       <shop:js-imports-main/>
-      
    </body>
 </html>

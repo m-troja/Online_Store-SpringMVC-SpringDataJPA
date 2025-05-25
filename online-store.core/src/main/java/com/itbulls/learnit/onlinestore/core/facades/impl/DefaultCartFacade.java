@@ -81,7 +81,6 @@ public class DefaultCartFacade implements CartFacade {
 					
 					System.out.println("Added item to cart. New cart : " +  cart.toString());
 
-
 					return;
 				}
 			}
@@ -158,10 +157,12 @@ public class DefaultCartFacade implements CartFacade {
 	    System.out.println("in removeItemFromCart... ");
 
 	    Cart cart = findCartById(cartId);
+	    
 	    if (cart == null) {
 	        System.out.println("Cart not found with id: " + cartId);
 	        return new Cart();
 	    }
+	    
 	    System.out.println("cart from DB: " + cart.toString());
 
 	    Set<CartItem> items = cart.getItems();
@@ -182,7 +183,10 @@ public class DefaultCartFacade implements CartFacade {
 	                System.out.println("Qty of item = 1! Removing item from cart.");
 	                cart.removeItem(item);
 	                
-	            } else {
+	            }
+	            
+	            else 
+	            {
 	                item.setQuantity(item.getQuantity() - 1);
 	                System.out.println("Qty decremented! New qty = " + item.getQuantity());
 
@@ -191,8 +195,13 @@ public class DefaultCartFacade implements CartFacade {
 
 	                return cart;
 	            }
+	            
 	            break; // item found, no need to continue looping
-	        } else {
+	            
+	        } 
+	        
+	        else 
+	        {
 	            System.out.println("inside else, loop: CartItem item does not match itemId");
 	        }
 	    }
@@ -206,8 +215,6 @@ public class DefaultCartFacade implements CartFacade {
 	    return cart;
 	}
 
-	
-	
 	public Integer getSizeOfCart(Cart cart)
 	{
 		return cart.getItems().size();
@@ -218,6 +225,36 @@ public class DefaultCartFacade implements CartFacade {
 		return cartItemRepo.countByCartAndProduct(cart, product);
 	}
 
+//	It removes the cart
+	public void deleteCart(Integer cartId)
+	{
+		cartRepo.delete(findCartById(cartId));
+	}
 
+	public Integer getNumberOfProductsInCart(Cart cart)
+	{
+		Set<CartItem> items = cart.getItems();
+		List<Product> products = new ArrayList<>();
+		Iterator<CartItem> itemIterator = items.iterator(); 
+		Integer total = 0;
+		
+//		Iterate over every cart's item
+		while(itemIterator.hasNext())
+		{
+			CartItem item = itemIterator.next();
+			Integer itemQty = item.getQuantity();
+			
+//			Add one product for one quantity of item
+			for (int i = 0; i < itemQty ; i++) 
+			{
+				total++;
+			}		
+		}
+		
+		System.out.println("getProductsFromCart, products: " + products.toString());
+		
+		return total;
+
+	}
 
 }
