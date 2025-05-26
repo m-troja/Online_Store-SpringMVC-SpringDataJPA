@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,25 +41,21 @@ public class CartController {
 	private CartFacade cartFacade;
 	
 	@GetMapping()
-	public String doGet( HttpSession session) {
-		User user = (User)session.getAttribute(SignInController.LOGGED_IN_USER_ATTR);
-		
-		if (cartFacade.findByUser(user) != null)
-		{
-			Cart cart = cartFacade.findByUser(user);
-			BigDecimal price = cartFacade.calculatePriceOfCart(cart);
-			session.setAttribute("cart", cart);
-			session.setAttribute("price", price);
-			
-			
-			return "cart";
-		}
-		else 
-		{
-				session.setAttribute("errorMsg", "Your cart is empty!" );
-			
-			return "cart";
-		}
+	public String doGet(HttpSession session, Model model) {
+	    User user = (User) session.getAttribute(SignInController.LOGGED_IN_USER_ATTR);
+
+	    if (cartFacade.findByUser(user) != null) {
+	        Cart cart = cartFacade.findByUser(user);
+	        BigDecimal price = cartFacade.calculatePriceOfCart(cart);
+
+	        model.addAttribute("cart", cart);       
+	        model.addAttribute("price", price);    
+
+	        return "cart";
+	    } else {
+	        model.addAttribute("errorMsg", "Your cart is empty!"); 
+	        return "cart";
+	    }
 	}
 	
 	@GetMapping(value = "/add")

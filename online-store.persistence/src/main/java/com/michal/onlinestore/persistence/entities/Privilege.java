@@ -39,5 +39,10 @@ public class Privilege {
 		return name;
 	}
 
+	@Override
+	public String toString() {
+		return "Privilege [id=" + id + ", name=" + name + "]";
+	}
+
 
 }

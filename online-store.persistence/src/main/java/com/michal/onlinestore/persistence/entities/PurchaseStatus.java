@@ -28,6 +28,10 @@ public class PurchaseStatus {
 	public void setStatusName(String statusName) {
 		this.statusName = statusName;
 	}
+	@Override
+	public String toString() {
+		return "PurchaseStatus [id=" + id + ", statusName=" + statusName + "]";
+	}
 
 
 

@@ -20,15 +20,15 @@ public class FulfilmentController {
 	@Autowired
 	private PurchaseFacade purchaseFacade;
 	
-	@PostMapping("/management-fulfilment")
+	@PostMapping("/admin/management-fulfilment")
 	public String doPost(@RequestParam Integer purchaseId) {
 		purchaseFacade
 			.markFulfilmentStageForPurchaseIdAsCompleted(purchaseId);
-		return "redirect:/management-fulfilment"; 
+		return "redirect:/admin/management-fulfilment"; 
 	}
 	
 	
-	@GetMapping("/management-fulfilment")
+	@GetMapping("/admin/management-fulfilment")
 	public String doGet(Model model)
 	{
 		List<Purchase> purchases = purchaseFacade.getNotCompletedPurchases();

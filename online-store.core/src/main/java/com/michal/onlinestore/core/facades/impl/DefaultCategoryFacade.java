@@ -9,16 +9,18 @@ import com.michal.onlinestore.persistence.entities.Category;
 import com.michal.onlinestore.persistence.repo.JpaCategoryRepo;
 import com.michal.onlinestore.core.facades.CategoryFacade;
 
+/**
+ * Default implementation of CategoryFacade.
+ * Provides retrieval of all product categories.
+ */
 @Service
 public class DefaultCategoryFacade implements CategoryFacade {
 	
 	@Autowired
-	JpaCategoryRepo categoryRepo;
-
+	private JpaCategoryRepo categoryRepo;
 
 	@Override
 	public List<Category> getCategories() {
 		return categoryRepo.findAll();
 	}
-
 }

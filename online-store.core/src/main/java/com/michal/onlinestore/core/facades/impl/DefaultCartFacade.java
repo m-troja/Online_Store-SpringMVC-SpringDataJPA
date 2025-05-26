@@ -1,10 +1,8 @@
 package com.michal.onlinestore.core.facades.impl;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,220 +17,160 @@ import com.michal.onlinestore.persistence.entities.User;
 import com.michal.onlinestore.persistence.repo.JpaCartItemRepo;
 import com.michal.onlinestore.persistence.repo.JpaCartRepo;
 
+/**
+ * Default implementation of CartFacade.
+ * Manages user carts and their items.
+ */
 @Service
 public class DefaultCartFacade implements CartFacade {
-	
-	@Autowired
-	JpaCartRepo cartRepo;
-	
-	@Autowired
-	JpaCartItemRepo cartItemRepo;
-	
-	@Autowired
-	CartItemFacade cartItemFacade;
-	
-/*	Called by cart controller. Check if user has a cart already . If no, create a cart and add the product into it.
-*	If user has a cart already, add the product into existing cart.	
-	Single user may have only one existing (opened) cart                            */
-	public void addToCart(User user, Product product)
-	{
-		
-		// Check if user has a cart
-		if ( cartRepo.findByUser(user) == null)
-		{
 
-			// No existing cart - save a new cart for user
-			Set<CartItem> items = new HashSet<>();
-			CartItem item = new CartItem(product, 1);
-			
-			items.add(item);
-			
+    @Autowired
+    private JpaCartRepo cartRepo;
 
-			createCart(items , user);
+    @Autowired
+    private JpaCartItemRepo cartItemRepo;
 
-		}
-	
-		// User has a cart - add the product into cart, or increment quantity of product
-	
-		else {
+    @Autowired
+    private CartItemFacade cartItemFacade;
 
-//			Get user's cart
-			Cart cart = cartRepo.findByUser(user);
-			Set<CartItem> itemsInCart = cart.getItems();
-			
-//			If Cart contains same product as user wants to add now, increment item's quantity by 1
-			for (CartItem item : itemsInCart )
-			{
-//				Check if has a product in cart
-				if ( item.getProduct().getId().equals(product.getId()) )
-				{
-					
-					
-					item.setQuantity(item.getQuantity() + 1);
-					
-					
-					
-					cartItemRepo.save(item);
-					cartRepo.save(cart);
-					
+    /**
+     * Adds a product to the user's cart.
+     * If no cart exists, creates a new cart with the product.
+     * If product exists in the cart, increments its quantity.
+     */
+    @Override
+    public void addToCart(User user, Product product) {
+        Cart cart = cartRepo.findByUser(user);
 
-					return;
-				}
-			}
-			
-//			If user does not have a product in cart, add product into cart
-			CartItem itemToAdd = new CartItem(product, 1);
-			itemToAdd.setCart(cart);
-			cart.addItem(itemToAdd);
-			
-			cartItemRepo.save(itemToAdd);
-			cartRepo.save(cart);
-			
-		}
-	}
-	
-	@Override
-	public void createCart(Set<CartItem> items, User user) {
-		Cart cart = new Cart();
-		cart.setUser(user);
-		
-//		associate items with cart
-		for (CartItem item : items)
-		{
-			item.setCart(cart);
-			item.setQuantity(1);
-		}
-		
-//		associate cart with items
-		cart.setItems(items);
-		
-		cartRepo.save(cart);
-		
+        if (cart == null) {
+            // Create new cart with a single cart item
+            Set<CartItem> items = new HashSet<>();
+            CartItem newItem = new CartItem(product, 1);
+            items.add(newItem);
+            createCart(items, user);
+        } else {
+            // Check if product already in cart
+            for (CartItem item : cart.getItems()) {
+                if (item.getProduct().getId().equals(product.getId())) {
+                    item.setQuantity(item.getQuantity() + 1);
+                    cartItemRepo.save(item);
+                    cartRepo.save(cart);
+                    return;
+                }
+            }
 
-	}
+            // Product not found in cart, add new item
+            CartItem newItem = new CartItem(product, 1);
+            newItem.setCart(cart);
+            cart.addItem(newItem);
+            cartItemRepo.save(newItem);
+            cartRepo.save(cart);
+        }
+    }
 
-	@Override
-	public Cart findCartById(Integer cartId) {
-		
-		return cartRepo.findById(cartId).orElse(null);
-	}
+    /**
+     * Creates a new cart for the user with the given set of items.
+     * Sets quantity of each item to 1 and associates them with the cart.
+     */
+    @Override
+    public void createCart(Set<CartItem> items, User user) {
+        Cart cart = new Cart();
+        cart.setUser(user);
 
-	@Override
-	public void deleteCart(Cart cart) {
-		cartRepo.delete(cart);
-	}
+        for (CartItem item : items) {
+            item.setCart(cart);
+            item.setQuantity(1);
+        }
 
-	public Cart findByUser(User user)
-	{
-		return cartRepo.findByUser(user);
-	}
+        cart.setItems(items);
+        cartRepo.save(cart);
+    }
 
-	public BigDecimal calculatePriceOfCart(Cart cart)
-	{
-		Set<CartItem> items = cart.getItems();
-		BigDecimal priceOfProduct = BigDecimal.ZERO;
-		BigDecimal total = BigDecimal.ZERO;
-		
-		for (CartItem item : items)
-		{
-			Product p = item.getProduct();
-			Integer qtyOfItem = item.getQuantity();
-			priceOfProduct = p.getPrice();
-			
-			total = total.add(priceOfProduct.multiply(BigDecimal.valueOf(qtyOfItem)));
-		}
-		
-		return total;
-	}
-	
-	public Cart removeItemFromCart(Integer cartId, Integer itemId) {
+    @Override
+    public Cart findCartById(Integer cartId) {
+        return cartRepo.findById(cartId).orElse(null);
+    }
 
-	    Cart cart = findCartById(cartId);
-	    
-	    if (cart == null) {
-	        return new Cart();
-	    }
-	    
+    @Override
+    public void deleteCart(Cart cart) {
+        cartRepo.delete(cart);
+    }
 
-	    Set<CartItem> items = cart.getItems();
+    public Cart findByUser(User user) {
+        return cartRepo.findByUser(user);
+    }
 
-	    Iterator<CartItem> iterator = items.iterator();
-	    while (iterator.hasNext()) {
-	        CartItem item = iterator.next();
+    /**
+     * Calculates total price of all items in the cart.
+     */
+    public BigDecimal calculatePriceOfCart(Cart cart) {
+        BigDecimal total = BigDecimal.ZERO;
+        for (CartItem item : cart.getItems()) {
+            total = total.add(item.getProduct().getPrice()
+                .multiply(BigDecimal.valueOf(item.getQuantity())));
+        }
+        return total;
+    }
 
+    /**
+     * Removes one unit of the specified item from the cart.
+     * Removes item completely if quantity reaches zero.
+     */
+    public Cart removeItemFromCart(Integer cartId, Integer itemId) {
+        Cart cart = findCartById(cartId);
+        if (cart == null) {
+            return new Cart();
+        }
 
-	        if (item.getId().equals(itemId)) {
+        Iterator<CartItem> iterator = cart.getItems().iterator();
 
-	            if (item.getQuantity().equals(1)) {
-	                cart.removeItem(item);
-	                
-	            }
-	            
-	            else 
-	            {
-	                item.setQuantity(item.getQuantity() - 1);
+        while (iterator.hasNext()) {
+            CartItem item = iterator.next();
+            if (item.getId().equals(itemId)) {
+                if (item.getQuantity() == 1) {
+                    cart.removeItem(item);
+                    cartItemRepo.delete(item);
+                } else {
+                    item.setQuantity(item.getQuantity() - 1);
+                    cartItemRepo.save(item);
+                }
+                cartRepo.save(cart);
+                break;
+            }
+        }
+        return cart;
+    }
 
-	                cartItemRepo.save(item);
-	                cartRepo.save(cart);
+    /**
+     * Returns count of distinct cart items.
+     */
+    public Integer getSizeOfCart(Cart cart) {
+        return cart.getItems().size();
+    }
 
-	                return cart;
-	            }
-	            
-	            break; // item found, no need to continue looping
-	            
-	        } 
-	        
-	        else 
-	        {
-	        }
-	    }
+    /**
+     * Returns quantity of the specified product in the cart.
+     */
+    public Integer getQtyOfItemInCart(Cart cart, Product product) {
+        return cartItemRepo.countByCartAndProduct(cart, product);
+    }
 
-	    // Save cart after possible removal
-	    cartRepo.save(cart);
+    /**
+     * Deletes a cart by its ID.
+     */
+    public void deleteCart(Integer cartId) {
+        Cart cart = findCartById(cartId);
+        if (cart != null) {
+            cartRepo.delete(cart);
+        }
+    }
 
-
-	    return cart;
-	}
-
-	public Integer getSizeOfCart(Cart cart)
-	{
-		return cart.getItems().size();
-	}
-	
-	public Integer getQtyOfItemInCart(Cart cart, Product product)
-	{
-		return cartItemRepo.countByCartAndProduct(cart, product);
-	}
-
-//	It removes the cart
-	public void deleteCart(Integer cartId)
-	{
-		cartRepo.delete(findCartById(cartId));
-	}
-
-	public Integer getNumberOfProductsInCart(Cart cart)
-	{
-		Set<CartItem> items = cart.getItems();
-		List<Product> products = new ArrayList<>();
-		Iterator<CartItem> itemIterator = items.iterator(); 
-		Integer total = 0;
-		
-//		Iterate over every cart's item
-		while(itemIterator.hasNext())
-		{
-			CartItem item = itemIterator.next();
-			Integer itemQty = item.getQuantity();
-			
-//			Add one product for one quantity of item
-			for (int i = 0; i < itemQty ; i++) 
-			{
-				total++;
-			}		
-		}
-		
-		
-		return total;
-
-	}
-
+    /**
+     * Returns total quantity of all products (sum of quantities) in the cart.
+     */
+    public Integer getNumberOfProductsInCart(Cart cart) {
+        return cart.getItems().stream()
+            .mapToInt(CartItem::getQuantity)
+            .sum();
+    }
 }

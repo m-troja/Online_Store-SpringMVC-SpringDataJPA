@@ -58,24 +58,25 @@ import com.michal.onlinestore.web.security.DefaultUserDetailsService;
 @PropertySource("classpath:database.properties")
 public class WebConfig implements WebMvcConfigurer {
 
-	@Bean
-	public ViewResolver viewResolver() {
-		InternalResourceViewResolver bean = new InternalResourceViewResolver();
-		bean.setViewClass(JstlView.class);
-		bean.setPrefix("/WEB-INF/views/");
-		bean.setSuffix(".jsp");
-		
-		return bean;
-	}
+    // Configures how views (JSPs) are resolved by Spring MVC
+    @Bean
+    public ViewResolver viewResolver() {
+        InternalResourceViewResolver bean = new InternalResourceViewResolver();
+        bean.setViewClass(JstlView.class);
+        bean.setPrefix("/WEB-INF/views/");
+        bean.setSuffix(".jsp");
+        return bean;
+    }
 
-	@Bean
-	public HandlerExceptionResolver errorHandler() {
+    // Handles exceptions and directs them to an error view
+    @Bean
+    public HandlerExceptionResolver errorHandler() {
         return new HandlerExceptionResolver() {
             @Override
             public ModelAndView resolveException(HttpServletRequest request,
-                                                  HttpServletResponse response,
-                                                  Object handler,
-                                                  Exception ex) {
+                                                 HttpServletResponse response,
+                                                 Object handler,
+                                                 Exception ex) {
                 ModelAndView model = new ModelAndView("error-page");
                 ex.printStackTrace();
                 model.addObject("exception", ex);
@@ -84,142 +85,160 @@ public class WebConfig implements WebMvcConfigurer {
             }
         };
     }
-	
-	@Override
+
+    // Serves static resources like CSS, JS, fonts, etc.
+    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
-          .addResourceHandler("/css/**", "/fonts/**", "/images/**", "/js/**", "/vendor/**")
-          .addResourceLocations("/css/", "/fonts/", "/images/", "/js/", "/vendor/");	
+            .addResourceHandler("/css/**", "/fonts/**", "/images/**", "/js/**", "/vendor/**")
+            .addResourceLocations("/css/", "/fonts/", "/images/", "/js/", "/vendor/");
     }
-	
-	@Bean
-	public MessageSource messageSource() {
-		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource ();
-	    messageSource.setBasenames("classpath:OnlineShopResourceBundle");
-	    messageSource.setDefaultEncoding("UTF-8");
-	    return messageSource;
-	}
-	
-	@Bean
-	public LocaleResolver localeResolver() {
-	    return new CookieLocaleResolver();
-	}
-	
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-	    LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-	    localeChangeInterceptor.setParamName("lang");
-	    registry.addInterceptor(localeChangeInterceptor);
-	}
-	
-	/* Spring Data JPA Config */
-	
-	private static final String PROPERTY_DRIVER = "driver";
-	private static final String PROPERTY_URL = "url";
-	private static final String PROPERTY_USERNAME = "user";
-	private static final String PROPERTY_PASSWORD = "password";
-	private static final String PROPERTY_SHOW_SQL = "hibernate.show_sql";
-	private static final String PROPERTY_DIALECT = "hibernate.dialect";
-	
-	@Autowired
-	private Environment environment;
-	
-	@Bean
-	public DataSource dataSource() {
-		DriverManagerDataSource ds = new DriverManagerDataSource();
-		ds.setUrl(environment.getProperty(PROPERTY_URL));
-		ds.setUsername(environment.getProperty(PROPERTY_USERNAME));
-		ds.setPassword(environment.getProperty(PROPERTY_PASSWORD));
-		ds.setDriverClassName(environment.getProperty(PROPERTY_DRIVER));
-		return ds;
-	}
-	
-	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-		LocalContainerEntityManagerFactoryBean lfb = new LocalContainerEntityManagerFactoryBean();
-		lfb.setDataSource(dataSource());
-		lfb.setPackagesToScan("com.michal.onlinestore");
-		lfb.setPersistenceProviderClass(HibernatePersistenceProvider.class);
-		lfb.setJpaProperties(hibernateProps());
-		return lfb;
-	}
-	
-	private Properties hibernateProps() {
-		Properties properties = new Properties();
-		properties.setProperty(PROPERTY_DIALECT, environment.getProperty(PROPERTY_DIALECT));
-		properties.setProperty(PROPERTY_SHOW_SQL, environment.getProperty(PROPERTY_SHOW_SQL));
 
-		return properties;
-	}
-	@Bean
-	public JpaTransactionManager transactionManager() {
-		JpaTransactionManager transactionManager = new JpaTransactionManager();
-		transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
-		return transactionManager;
-	}	
-	
-	/* Spring Security Config */
-	
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-	
-	@Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    	http.csrf()
-	        .disable()
-	        .authorizeHttpRequests()
-		        .requestMatchers("/online-store.web/admin")
-		        .hasRole("ADMIN")
-		        .requestMatchers("/online-store.web/management*")
-		        .hasRole("MANAGER")
-		        .requestMatchers("/online-store.web/my-profile")//		        
-		        .authenticated()
-	        .and()
-		        .formLogin()
-		        .usernameParameter("email")		// in case you want to use different parameter 
-//		        .passwordParameter("pass")
-		        .loginPage("/online-store.web/signin")
-		        .loginProcessingUrl("/perform_login")
-		        .defaultSuccessUrl("/homepage", false)
-		        .successHandler(successHandler())
-		        .failureUrl("/signin?error=true")
-//		        .failureHandler(authenticationFailureHandler())
-		        .permitAll()
-	        .and()
-		        .logout()
-		        .logoutUrl("/perform_logout")
-		        .deleteCookies("JSESSIONID")
-		        .permitAll()
-		        .logoutSuccessHandler(logoutSuccessHandler())
-	        .and()
-		     	.rememberMe()
-		     	.key("superSecretKey")
-		        .rememberMeParameter("remember") 
-		        .rememberMeCookieName("rememberlogin")
-		        ;    
-    	return http.build();
+    // Loads internationalized message properties
+    @Bean
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource ();
+        messageSource.setBasenames("classpath:OnlineShopResourceBundle");
+        messageSource.setDefaultEncoding("UTF-8");
+        return messageSource;
     }
-	
-	@Bean
-	public AuthenticationFailureHandler authenticationFailureHandler() {
-		return new DefaultAuthenticationFailureHandler();
-	}
-	
-	@Bean
-	public LogoutSuccessHandler logoutSuccessHandler() {
-		return new DefaultSuccessLogoutHandler();
-	}
-	
-	@Bean
-	public AuthenticationSuccessHandler successHandler() 
-	{
-		return new DefaultAuthenticationSuccessHandler();
-	}
-	
-	@Bean
-	public UserDetailsService userDetailsService() {
-		return new DefaultUserDetailsService();
-	}
+
+    // Resolves user locale settings using cookies
+    @Bean
+    public LocaleResolver localeResolver() {
+        return new CookieLocaleResolver();
+    }
+
+    // Adds support for changing locale via request parameter
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+        localeChangeInterceptor.setParamName("lang");
+        registry.addInterceptor(localeChangeInterceptor);
+    }
+
+    // Defines the data source used by the application
+    @Bean
+    public DataSource dataSource() {
+        DriverManagerDataSource ds = new DriverManagerDataSource();
+        ds.setUrl(environment.getProperty(PROPERTY_URL));
+        ds.setUsername(environment.getProperty(PROPERTY_USERNAME));
+        ds.setPassword(environment.getProperty(PROPERTY_PASSWORD));
+        ds.setDriverClassName(environment.getProperty(PROPERTY_DRIVER));
+        return ds;
+    }
+
+    // Configures the JPA EntityManager factory
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        LocalContainerEntityManagerFactoryBean lfb = new LocalContainerEntityManagerFactoryBean();
+        lfb.setDataSource(dataSource());
+        lfb.setPackagesToScan("com.michal.onlinestore");
+        lfb.setPersistenceProviderClass(HibernatePersistenceProvider.class);
+        lfb.setJpaProperties(hibernateProps());
+        return lfb;
+    }
+
+/*
+ * JPA & Hibernate
+ */
+    
+    private static final String PROPERTY_DRIVER = "driver";
+    private static final String PROPERTY_URL = "url";
+    private static final String PROPERTY_USERNAME = "user";
+    private static final String PROPERTY_PASSWORD = "password";
+    private static final String PROPERTY_SHOW_SQL = "hibernate.show_sql";
+    private static final String PROPERTY_DIALECT = "hibernate.dialect";
+    
+    // Sets JPA-specific Hibernate properties
+    private Properties hibernateProps() {
+        Properties properties = new Properties();
+        properties.setProperty(PROPERTY_DIALECT, environment.getProperty(PROPERTY_DIALECT));
+        properties.setProperty(PROPERTY_SHOW_SQL, environment.getProperty(PROPERTY_SHOW_SQL));
+        return properties;
+    }
+
+    // Configures the transaction manager for JPA
+    @Bean
+    public JpaTransactionManager transactionManager() {
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
+        return transactionManager;
+    }
+
+    // Sets up the password encoder for user credentials
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    /*
+     * Security
+     */
+    
+    
+    // Configures HTTP security, login, logout, and access rules
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/management*").hasRole("MANAGER")
+                .requestMatchers("/my-profile").authenticated()
+            )
+            .formLogin(form -> form
+                .usernameParameter("email")
+                .loginPage("/signin")
+                .loginProcessingUrl("/perform_login")
+                .defaultSuccessUrl("/homepage", false)
+                .successHandler(successHandler())
+                .failureUrl("/signin?error=true")
+                .permitAll()
+            )
+            .logout(logout -> logout
+                .logoutUrl("/perform_logout")
+                .deleteCookies("JSESSIONID")
+                .permitAll()
+                .logoutSuccessHandler(logoutSuccessHandler())
+            )
+            .rememberMe(rememberMe -> rememberMe
+                .key("superSecretKey")
+                .rememberMeParameter("remember")
+                .rememberMeCookieName("rememberlogin")
+            );
+
+        return http.build();
+    }
+
+
+
+    // Handles login failure events
+    @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler() {
+        return new DefaultAuthenticationFailureHandler();
+    }
+
+    // Handles successful logout events
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() {
+        return new DefaultSuccessLogoutHandler();
+    }
+
+    // Handles successful login events
+    @Bean
+    public AuthenticationSuccessHandler successHandler() {
+        return new DefaultAuthenticationSuccessHandler();
+    }
+
+    // Provides custom user authentication logic
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return new DefaultUserDetailsService();
+    }
+
+    // Environment used to load database properties
+    @Autowired
+    private Environment environment;
+
 }

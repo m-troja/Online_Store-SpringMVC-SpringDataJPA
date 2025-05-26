@@ -10,15 +10,19 @@ import com.michal.onlinestore.persistence.repo.JpaProductRepo;
 import com.michal.onlinestore.core.facades.ProductFacade;
 import com.michal.onlinestore.core.services.impl.JpaProductManagementService;
 
+/**
+ * Default implementation of ProductFacade.
+ * Provides product retrieval by various criteria with pagination support.
+ * Delegates persistence to JpaProductRepo and management to JpaProductManagementService.
+ */
 @Service
 public class DefaultProductFacade implements ProductFacade {
 	
 	@Autowired
-	JpaProductRepo productRepo;
+	private JpaProductRepo productRepo;
 	
 	@Autowired
-	JpaProductManagementService productService;
-
+	private JpaProductManagementService productService;
 
 	@Override
 	public List<Product> getProductsLikeName(String searchQuery) {
@@ -26,45 +30,32 @@ public class DefaultProductFacade implements ProductFacade {
 	}
 
 	@Override
-	public List<Product> getProductsByCategoryId(Integer id) {
-		return productRepo.findByCategoryId(id);
+	public List<Product> getProductsByCategoryId(Integer categoryId) {
+		return productRepo.findByCategoryId(categoryId);
 	}
 
 	@Override
-	public List<Product> getProductsByCategoryIdForPageWithLimit(Integer categoryId, Integer page,
-			Integer paginationLimit) {
-		Integer offset = (page - 1) * paginationLimit;
-		return productRepo.findByCategoryIdPaginationLimit(categoryId, offset, paginationLimit);
+	public List<Product> getProductsByCategoryIdForPageWithLimit(Integer categoryId, Integer page, Integer pageSize) {
+		int offset = (page - 1) * pageSize;
+		return productRepo.findByCategoryIdPaginationLimit(categoryId, offset, pageSize);
 	}
 
 	@Override
-	public Integer getNumberOfPagesForCategory(Integer categoryId, Integer paginationLimit) {
-		
-		Integer totalProductsInCategory = productRepo.countProductsForCategory(categoryId);
-		int pages = totalProductsInCategory / paginationLimit;
-		if ( (totalProductsInCategory % paginationLimit) != 0) {
-			pages++;
-		}
-		
-		return pages;
-		}
-
-	@Override
-	public Integer getNumberOfPagesForSearch(String searchQuery, Integer paginationLimit) {
-		Integer totalProductsForSearch = productRepo.getProductsForSearch(searchQuery);
-		int pages = totalProductsForSearch / paginationLimit;
-		if ( (totalProductsForSearch % paginationLimit) != 0) {
-			pages++;
-		}
-		return pages;
+	public Integer getNumberOfPagesForCategory(Integer categoryId, Integer pageSize) {
+		int totalProducts = productRepo.countProductsForCategory(categoryId);
+		return calculateTotalPages(totalProducts, pageSize);
 	}
 
 	@Override
-	public List<Product> getProductsLikeNameForPageWithLimit(String searchQuery, Integer page,
-			Integer paginationLimit) {
-		Integer offset = (page - 1) * paginationLimit;
+	public Integer getNumberOfPagesForSearch(String searchQuery, Integer pageSize) {
+		int totalProducts = productRepo.getProductsForSearch(searchQuery);
+		return calculateTotalPages(totalProducts, pageSize);
+	}
 
-		return productRepo.getProductsLikeNameForPageWithLimit(searchQuery, offset, paginationLimit);
+	@Override
+	public List<Product> getProductsLikeNameForPageWithLimit(String searchQuery, Integer page, Integer pageSize) {
+		int offset = (page - 1) * pageSize;
+		return productRepo.getProductsLikeNameForPageWithLimit(searchQuery, offset, pageSize);
 	}
 
 	@Override
@@ -76,5 +67,11 @@ public class DefaultProductFacade implements ProductFacade {
 	public Product getProductByGuid(String guid) {
 		return productRepo.findByGuid(guid);
 	}
-
+	
+	/**
+	 * Calculates the total number of pages given total items and page size.
+	 */
+	private int calculateTotalPages(int totalItems, int pageSize) {
+		return (totalItems + pageSize - 1) / pageSize; // Ceiling division
+	}
 }

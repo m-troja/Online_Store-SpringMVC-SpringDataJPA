@@ -86,4 +86,10 @@ public class Purchase {
 		return products.stream().map(product -> product.getPrice()).reduce(BigDecimal.ZERO, BigDecimal::add);
 	}
 
+	@Override
+	public String toString() {
+		return "Purchase [id=" + id + ", user=" + user + ", products=" + products + ", purchaseStatus=" + purchaseStatus
+				+ ", purchaseTimestamp=" + purchaseTimestamp + "]";
+	}
+
 }

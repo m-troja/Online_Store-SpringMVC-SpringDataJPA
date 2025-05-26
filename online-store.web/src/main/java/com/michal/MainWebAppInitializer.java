@@ -15,24 +15,24 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 public class MainWebAppInitializer implements WebApplicationInitializer {
 
-	@Override
-	public void onStartup(final ServletContext sc) throws ServletException {
-		
-		var ctx = new AnnotationConfigWebApplicationContext();
-		ctx.register(WebConfig.class);
-		sc.addListener(new ContextLoaderListener(ctx));
+    // Called automatically on application startup
+    @Override
+    public void onStartup(final ServletContext sc) throws ServletException {
 
-		ServletRegistration.Dynamic appServlet = sc.addServlet("mvc",
-				new DispatcherServlet(new GenericWebApplicationContext()));
-		appServlet.setLoadOnStartup(1);
-		appServlet.addMapping("/");
-		appServlet.setInitParameter("throwExceptionIfNoHandlerFound", "true");
-		
-		sc.addFilter("securityFilter", new DelegatingFilterProxy("springSecurityFilterChain"))
-        	.addMappingForUrlPatterns(null, false, "/*");
-		
-		
-		java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
+        // Initializes Spring context with configuration from WebConfig
+        var ctx = new AnnotationConfigWebApplicationContext();
+        ctx.register(WebConfig.class);
+        sc.addListener(new ContextLoaderListener(ctx));
 
-	}
+        // Registers the DispatcherServlet for handling requests
+        ServletRegistration.Dynamic appServlet = sc.addServlet("mvc",
+                new DispatcherServlet(new GenericWebApplicationContext()));
+        appServlet.setLoadOnStartup(1);
+        appServlet.addMapping("/");
+        appServlet.setInitParameter("throwExceptionIfNoHandlerFound", "true");
+
+        // Registers Spring Security filter chain
+        sc.addFilter("securityFilter", new DelegatingFilterProxy("springSecurityFilterChain"))
+            .addMappingForUrlPatterns(null, false, "/*");
+    }
 }
