@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.michal.onlinestore.persistence.entities.User;
 
+<<<<<<< HEAD
 /**
  * Facade interface providing operations related to User management.
  * This interface abstracts user-related business logic and interactions.
@@ -89,4 +90,28 @@ public interface UserFacade {
      * @return true if the user is enabled after addition; false otherwise
      */
     boolean addUser(User user);
+=======
+@Service
+public interface UserFacade {
+
+	void registerUser(User user, String partnerCode);
+
+	User getUserByEmail(String email);
+	
+	List<User> getUsers();
+
+	User getUserById(Integer userId);
+
+	void updateUser(User referrerUser);
+
+	List<User> getReferralsForUser(User loggedInUser);
+	
+	List<User> findByFirstNameCaseInsensitive(String firstName);
+
+	List<User> getAllUsersOrderByFirstName();
+
+	void deleteUser(Integer id);
+
+	boolean addUser(User user);
+>>>>>>> 695085bb892170646e452eb0cdff3bf54a05b59b
 }

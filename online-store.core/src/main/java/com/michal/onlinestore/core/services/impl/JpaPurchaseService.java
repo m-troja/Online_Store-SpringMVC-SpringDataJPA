@@ -5,9 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+<<<<<<< HEAD
 import com.michal.onlinestore.persistence.entities.Purchase;
 import com.michal.onlinestore.persistence.repo.JpaPurchaseRepo;
 import com.michal.onlinestore.core.services.PurchaseManagementService;
+=======
+import com.michal.onlinestore.core.services.PurchaseManagementService;
+import com.michal.onlinestore.persistence.entities.Purchase;
+import com.michal.onlinestore.persistence.repo.JpaPurchaseRepo;
+>>>>>>> 695085bb892170646e452eb0cdff3bf54a05b59b
 
 @Service
 public class JpaPurchaseService implements PurchaseManagementService {

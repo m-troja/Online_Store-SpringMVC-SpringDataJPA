@@ -15,8 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+<<<<<<< HEAD
 import com.michal.onlinestore.persistence.entities.User;
 import com.michal.onlinestore.core.facades.UserFacade;
+=======
+import com.michal.onlinestore.core.facades.UserFacade;
+import com.michal.onlinestore.persistence.entities.User;
+>>>>>>> 695085bb892170646e452eb0cdff3bf54a05b59b
 
 public class DefaultAuthenticationSuccessHandler implements AuthenticationSuccessHandler 
 {

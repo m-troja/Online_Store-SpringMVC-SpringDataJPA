@@ -8,6 +8,7 @@ import com.michal.onlinestore.persistence.entities.Cart;
 import com.michal.onlinestore.persistence.entities.Purchase;
 import com.michal.onlinestore.persistence.entities.User;
 
+<<<<<<< HEAD
 /**
  * Facade interface for managing purchase-related operations.
  * Defines methods to create and track purchases within the system.
@@ -60,4 +61,20 @@ public interface PurchaseFacade {
      * @return list of purchases associated with the user
      */
     List<Purchase> getPurchasesByUserId(Integer userId);
+=======
+@Service
+public interface PurchaseFacade {
+
+	Integer LAST_STATUS_OF_ORDER_FULFILMENT_ID = 6;
+	
+	Purchase createPurchaseAndReturnPurchase(User user, Cart cart);
+
+	List<Purchase> getNotCompletedPurchases();
+
+	void markFulfilmentStageForPurchaseIdAsCompleted(Integer purchaseId);
+	
+	Purchase getPurchaseById(Integer purhcaseId);
+	
+	List<Purchase> getPurchasesByUserId(Integer userId);
+>>>>>>> 695085bb892170646e452eb0cdff3bf54a05b59b
 }

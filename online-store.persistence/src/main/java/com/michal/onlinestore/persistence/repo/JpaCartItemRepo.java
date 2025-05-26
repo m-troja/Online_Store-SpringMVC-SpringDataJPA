@@ -5,8 +5,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.michal.onlinestore.persistence.entities.Cart;
+<<<<<<< HEAD
 import com.michal.onlinestore.persistence.entities.CartItem;
 import com.michal.onlinestore.persistence.entities.Product;
+=======
+import com.michal.onlinestore.persistence.entities.Product;
+import com.michal.onlinestore.persistence.entities.CartItem;
+>>>>>>> 695085bb892170646e452eb0cdff3bf54a05b59b
 
 @Repository
 public interface JpaCartItemRepo extends CrudRepository<CartItem, Integer> {

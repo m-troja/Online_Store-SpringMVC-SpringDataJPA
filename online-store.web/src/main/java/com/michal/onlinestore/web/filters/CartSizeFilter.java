@@ -13,11 +13,18 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
+<<<<<<< HEAD
+=======
+import com.michal.onlinestore.core.facades.CartFacade;
+>>>>>>> 695085bb892170646e452eb0cdff3bf54a05b59b
 import com.michal.onlinestore.persistence.entities.Cart;
 import com.michal.onlinestore.persistence.entities.CartItem;
 import com.michal.onlinestore.persistence.entities.User;
 import com.michal.onlinestore.web.controllers.SignInController;
+<<<<<<< HEAD
 import com.michal.onlinestore.core.facades.CartFacade;
+=======
+>>>>>>> 695085bb892170646e452eb0cdff3bf54a05b59b
 
 import java.io.IOException;
 

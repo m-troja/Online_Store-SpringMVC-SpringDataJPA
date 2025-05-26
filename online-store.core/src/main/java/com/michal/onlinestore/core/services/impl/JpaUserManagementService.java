@@ -6,10 +6,17 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+<<<<<<< HEAD
 import com.michal.onlinestore.persistence.entities.User;
 import com.michal.onlinestore.persistence.repo.JpaUserRepo;
 import com.michal.onlinestore.core.mail.impl.DefaultMailSender;
 import com.michal.onlinestore.core.services.UserManagementService;
+=======
+import com.michal.onlinestore.core.mail.impl.DefaultMailSender;
+import com.michal.onlinestore.core.services.UserManagementService;
+import com.michal.onlinestore.persistence.entities.User;
+import com.michal.onlinestore.persistence.repo.JpaUserRepo;
+>>>>>>> 695085bb892170646e452eb0cdff3bf54a05b59b
 
 @Service
 public class JpaUserManagementService implements UserManagementService {
