@@ -8,6 +8,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.itbulls.learnit.onlinestore.core.facades.RoleFacade;
 import com.itbulls.learnit.onlinestore.core.facades.UserFacade;
 import com.itbulls.learnit.onlinestore.core.services.AffiliateMarketingService;
 import com.itbulls.learnit.onlinestore.core.services.UserManagementService;
@@ -23,7 +24,7 @@ public class DefaultUserFacade implements UserFacade {
 
     
 	@Autowired
-	DefaultRoleFacade roleFacade;
+	RoleFacade roleFacade;
 	
 	@Autowired
 	private UserManagementService userManagement;
@@ -43,7 +44,6 @@ public class DefaultUserFacade implements UserFacade {
 		Set<Role> roles = new HashSet<>();
 		Role role =  roleRepo.findByName(CUSTOMER_ROLE_NAME);
 		roles.add(role);
-		System.out.println(role.toString());
 		user.setRoles(roles);
 		user.setPartnerCode(marketingService.generateUniquePartnerCode());
 		user.setReferrerUser(userRepo.findByPartnerCode(referrerCode));

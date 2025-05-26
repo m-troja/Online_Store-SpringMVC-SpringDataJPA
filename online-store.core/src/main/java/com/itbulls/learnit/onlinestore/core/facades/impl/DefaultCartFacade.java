@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.itbulls.learnit.onlinestore.core.facades.CartFacade;
+import com.itbulls.learnit.onlinestore.core.facades.CartItemFacade;
 import com.itbulls.learnit.onlinestore.persistence.entities.Cart;
 import com.itbulls.learnit.onlinestore.persistence.entities.CartItem;
 import com.itbulls.learnit.onlinestore.persistence.entities.Product;
@@ -39,7 +40,6 @@ public class DefaultCartFacade implements CartFacade {
 		// Check if user has a cart
 		if ( cartRepo.findByUser(user) == null)
 		{
-			System.out.println( " cartRepo.findByUser(user) == null" );
 
 			// No existing cart - save a new cart for user
 			Set<CartItem> items = new HashSet<>();
@@ -47,7 +47,6 @@ public class DefaultCartFacade implements CartFacade {
 			
 			items.add(item);
 			
-			System.out.println( " createCart(items , user).  items : " + items.toString());
 
 			createCart(items , user);
 
@@ -68,18 +67,14 @@ public class DefaultCartFacade implements CartFacade {
 				if ( item.getProduct().getId().equals(product.getId()) )
 				{
 					
-					System.out.println("Same product found in cart! Incremeting qty by 1 ");
 					
 					item.setQuantity(item.getQuantity() + 1);
 					
-					System.out.println("item.getQuantity() " + item.getQuantity() + ", product : " + item.getProduct().toString());
 					
-					System.out.println("Saving cart and breaking. ");
 					
 					cartItemRepo.save(item);
 					cartRepo.save(cart);
 					
-					System.out.println("Added item to cart. New cart : " +  cart.toString());
 
 					return;
 				}
@@ -87,14 +82,12 @@ public class DefaultCartFacade implements CartFacade {
 			
 //			If user does not have a product in cart, add product into cart
 			CartItem itemToAdd = new CartItem(product, 1);
-			System.out.println("user does not have a product in cart, add product into cart : " +  itemToAdd.toString());
 			itemToAdd.setCart(cart);
 			cart.addItem(itemToAdd);
 			
 			cartItemRepo.save(itemToAdd);
 			cartRepo.save(cart);
 			
-			System.out.println("Added item into cart. New cart : " + cart.toString());
 		}
 	}
 	
@@ -115,7 +108,6 @@ public class DefaultCartFacade implements CartFacade {
 		
 		cartRepo.save(cart);
 		
-		System.out.println("Created cart with items: " +  items.toString());
 
 	}
 
@@ -154,33 +146,24 @@ public class DefaultCartFacade implements CartFacade {
 	}
 	
 	public Cart removeItemFromCart(Integer cartId, Integer itemId) {
-	    System.out.println("in removeItemFromCart... ");
 
 	    Cart cart = findCartById(cartId);
 	    
 	    if (cart == null) {
-	        System.out.println("Cart not found with id: " + cartId);
 	        return new Cart();
 	    }
 	    
-	    System.out.println("cart from DB: " + cart.toString());
 
 	    Set<CartItem> items = cart.getItems();
-	    System.out.println("items before removing : " + items.toString());
 
 	    Iterator<CartItem> iterator = items.iterator();
 	    while (iterator.hasNext()) {
 	        CartItem item = iterator.next();
 
-	        System.out.println("in iterator loop...");
-	        System.out.println("item.id = " + item.getId() + ", itemId = " + itemId);
-	        System.out.println("item qty = " + item.getQuantity());
 
 	        if (item.getId().equals(itemId)) {
-	            System.out.println("inside item.getId() == itemId");
 
 	            if (item.getQuantity().equals(1)) {
-	                System.out.println("Qty of item = 1! Removing item from cart.");
 	                cart.removeItem(item);
 	                
 	            }
@@ -188,7 +171,6 @@ public class DefaultCartFacade implements CartFacade {
 	            else 
 	            {
 	                item.setQuantity(item.getQuantity() - 1);
-	                System.out.println("Qty decremented! New qty = " + item.getQuantity());
 
 	                cartItemRepo.save(item);
 	                cartRepo.save(cart);
@@ -202,15 +184,12 @@ public class DefaultCartFacade implements CartFacade {
 	        
 	        else 
 	        {
-	            System.out.println("inside else, loop: CartItem item does not match itemId");
 	        }
 	    }
 
 	    // Save cart after possible removal
 	    cartRepo.save(cart);
 
-	    System.out.println("items after removing: " + cart.getItems().toString());
-	    System.out.println("Size of cart after removeItemFromCart: " + getSizeOfCart(cart));
 
 	    return cart;
 	}
@@ -251,7 +230,6 @@ public class DefaultCartFacade implements CartFacade {
 			}		
 		}
 		
-		System.out.println("getProductsFromCart, products: " + products.toString());
 		
 		return total;
 

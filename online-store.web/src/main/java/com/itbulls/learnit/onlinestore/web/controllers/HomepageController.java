@@ -18,7 +18,6 @@ public class HomepageController {
 	
 	@GetMapping(value = {"/homepage", "/"})
 	public String doGet(Model model) {
-		System.out.println("GET Homepage");
 		List<Category> categories = categoryFacade.getCategories();
 		model.addAttribute("categories", categories);
 		return "homepage";

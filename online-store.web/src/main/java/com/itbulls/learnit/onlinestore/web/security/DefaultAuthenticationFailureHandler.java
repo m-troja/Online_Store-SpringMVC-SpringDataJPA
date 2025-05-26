@@ -23,7 +23,6 @@ public class DefaultAuthenticationFailureHandler implements AuthenticationFailur
 			.append(System.lineSeparator())
 			.append("exception: ").append(exception.getMessage());
 		
-		System.out.println("=== In the authentication failure handler ===");
 		response.setContentType("text/html; charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().println(sb.toString());

@@ -77,7 +77,6 @@ public class CheckoutController {
 		    while (attributeNames.hasMoreElements()) {
 		        String name = attributeNames.nextElement();
 		        Object value = session.getAttribute(name);
-		        System.out.println(name + " : " + value);
 		    }
 		    
 		return "checkout";

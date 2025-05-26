@@ -91,12 +91,10 @@ public class DefaultPurchaseFacade implements PurchaseFacade {
 //			Add one product for one quantity of item
 			for (int i = 0; i < itemQty ; i++) 
 			{
-				System.out.println("item =  " + item.toString() + ", i = " + i + ", itemQty = " + itemQty + ", product = " + item.getProduct().toString());
 				products.add(item.getProduct());
 			}		
 		}
 		
-		System.out.println("getProductsFromCart, products: " + products.toString());
 		
 		return products;
 	}

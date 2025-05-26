@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.itbulls.learnit.onlinestore.core.facades.ProductFacade;
 import com.itbulls.learnit.onlinestore.core.facades.impl.DefaultProductFacade;
 import com.itbulls.learnit.onlinestore.persistence.entities.Product;
 
@@ -21,7 +22,7 @@ public class CategoryController {
 	private Integer paginationLimit;
 	
 	@Autowired
-	private DefaultProductFacade productFacade;
+	private ProductFacade productFacade;
 
 	@GetMapping("/category")
 	public String doGet(@RequestParam("id") Integer categoryId, @RequestParam Integer page, Model model) {

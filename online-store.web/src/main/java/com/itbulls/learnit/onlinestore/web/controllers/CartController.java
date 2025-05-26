@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itbulls.learnit.onlinestore.core.facades.CartFacade;
+import com.itbulls.learnit.onlinestore.core.facades.CartItemFacade;
 import com.itbulls.learnit.onlinestore.core.facades.ProductFacade;
-import com.itbulls.learnit.onlinestore.core.facades.impl.CartItemFacade;
 import com.itbulls.learnit.onlinestore.persistence.entities.Cart;
 import com.itbulls.learnit.onlinestore.persistence.entities.CartItem;
 import com.itbulls.learnit.onlinestore.persistence.entities.Product;
@@ -50,8 +50,6 @@ public class CartController {
 			session.setAttribute("cart", cart);
 			session.setAttribute("price", price);
 			
-			System.out.println("GET Cart : " + cart.toString());
-			System.out.println("GET Cart getSizeOfCart : " + cartFacade.getSizeOfCart(cart));
 			
 			return "cart";
 		}
@@ -80,16 +78,13 @@ public class CartController {
 	@PostMapping(value = "/remove")
 	public String remove(@RequestParam("itemId") Integer itemId, HttpSession session, @RequestParam("cartId") Integer cartId) {
 
-		System.out.println("In CartController remove...");
 		
-		System.out.println("Calling  removeItemFromCart with params itemId " +  itemId + "  cartId  " +  cartId  );
 		
 		
 		Cart newCart = cartFacade.removeItemFromCart(cartId, itemId);
 		
 		BigDecimal price = cartFacade.calculatePriceOfCart(newCart);
 
-		System.out.println("Size of cart sent to JSP : " + cartFacade.getSizeOfCart(newCart) );
 		session.setAttribute("cart", newCart);
 		session.setAttribute("price", price);
 

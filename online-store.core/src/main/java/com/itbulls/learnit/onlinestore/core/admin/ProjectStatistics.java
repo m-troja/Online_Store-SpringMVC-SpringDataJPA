@@ -19,12 +19,7 @@ public class ProjectStatistics {
 		long htmlSourceFiles = calculateJavaFilesInProject(HTML_FILES_EXXTENSION);
 		long xmlSourceFiles = calculateJavaFilesInProject(XML_FILES_EXXTENSION);
 
-		System.out.println("Java source code files: \t\t" + javaSourceFiles);
-		System.out.println("JSP source code files: \t\t\t" + jspSourceFiles);
-		System.out.println("HTML source code files: \t\t" + htmlSourceFiles);
-		System.out.println("XML source code files: \t\t\t" + xmlSourceFiles);
 		
-		System.out.println("===== TOTAL:\t\t\t\t" + (javaSourceFiles + jspSourceFiles 
 				+ htmlSourceFiles + xmlSourceFiles));
 	}
 

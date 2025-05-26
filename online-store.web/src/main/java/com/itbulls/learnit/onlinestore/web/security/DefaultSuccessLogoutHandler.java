@@ -14,7 +14,6 @@ public class DefaultSuccessLogoutHandler implements LogoutSuccessHandler{
 	@Override
 	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException {
-		System.out.println("=== In Logout Success Handler ===");
 		response.sendRedirect(request.getServletContext().getContextPath() + "/signin");
 	}
 	
