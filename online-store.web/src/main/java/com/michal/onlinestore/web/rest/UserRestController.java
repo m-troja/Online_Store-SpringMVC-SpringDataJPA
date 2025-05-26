@@ -21,13 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-<<<<<<< HEAD
 import com.michal.onlinestore.persistence.entities.User;
 import com.michal.onlinestore.core.facades.UserFacade;
-=======
-import com.michal.onlinestore.core.facades.UserFacade;
-import com.michal.onlinestore.persistence.entities.User;
->>>>>>> 695085bb892170646e452eb0cdff3bf54a05b59b
 
 @RestController("userRestControllerApi")
 public class UserRestController {

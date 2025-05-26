@@ -20,15 +20,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-<<<<<<< HEAD
 import com.michal.onlinestore.persistence.entities.User;
 import com.michal.onlinestore.web.security.DefaultAuthenticationSuccessHandler;
 import com.michal.onlinestore.core.facades.UserFacade;
-=======
-import com.michal.onlinestore.core.facades.UserFacade;
-import com.michal.onlinestore.persistence.entities.User;
-import com.michal.onlinestore.web.security.DefaultAuthenticationSuccessHandler;
->>>>>>> 695085bb892170646e452eb0cdff3bf54a05b59b
 
 
 @WebFilter("/*")

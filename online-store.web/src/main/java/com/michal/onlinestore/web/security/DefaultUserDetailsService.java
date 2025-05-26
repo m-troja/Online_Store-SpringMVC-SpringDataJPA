@@ -14,18 +14,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-<<<<<<< HEAD
 
 import com.michal.onlinestore.persistence.entities.Privilege;
 import com.michal.onlinestore.persistence.entities.Role;
 import com.michal.onlinestore.persistence.entities.User;
 import com.michal.onlinestore.core.facades.UserFacade;
-=======
-import com.michal.onlinestore.core.facades.UserFacade;
-import com.michal.onlinestore.persistence.entities.Privilege;
-import com.michal.onlinestore.persistence.entities.Role;
-import com.michal.onlinestore.persistence.entities.User;
->>>>>>> 695085bb892170646e452eb0cdff3bf54a05b59b
 
 @Transactional
 public class DefaultUserDetailsService implements UserDetailsService 

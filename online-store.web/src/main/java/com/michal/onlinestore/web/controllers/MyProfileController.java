@@ -10,15 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-<<<<<<< HEAD
 import com.michal.onlinestore.persistence.entities.User;
 import com.michal.onlinestore.web.filters.PartnerCodeFilter;
 import com.michal.onlinestore.core.facades.UserFacade;
-=======
-import com.michal.onlinestore.core.facades.UserFacade;
-import com.michal.onlinestore.persistence.entities.User;
-import com.michal.onlinestore.web.filters.PartnerCodeFilter;
->>>>>>> 695085bb892170646e452eb0cdff3bf54a05b59b
 
 
 @Controller

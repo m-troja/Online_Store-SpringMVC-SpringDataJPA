@@ -7,13 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-<<<<<<< HEAD
 import com.michal.onlinestore.persistence.entities.Category;
 import com.michal.onlinestore.core.facades.CategoryFacade;
-=======
-import com.michal.onlinestore.core.facades.CategoryFacade;
-import com.michal.onlinestore.persistence.entities.Category;
->>>>>>> 695085bb892170646e452eb0cdff3bf54a05b59b
 
 @Controller
 public class HomepageController {

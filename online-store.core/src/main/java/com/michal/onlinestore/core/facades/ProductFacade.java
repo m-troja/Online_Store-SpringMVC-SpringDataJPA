@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.michal.onlinestore.persistence.entities.Product;
 
-<<<<<<< HEAD
 /**
  * Facade interface for product-related operations.
  * Provides methods to retrieve and query products based on various criteria.
@@ -84,26 +83,6 @@ public interface ProductFacade {
 	 * @param guid the product's GUID
 	 * @return the product entity or null if not found
 	 */
-=======
-@Service
-public interface ProductFacade {
-	
-	List<Product> getProductsLikeName(String searchQuery);
-
-	List<Product> getProductsByCategoryId(Integer id);
-
-	List<Product> getProductsByCategoryIdForPageWithLimit(Integer categoryId, Integer page, Integer paginationLimit);
-
-	Integer getNumberOfPagesForCategory(Integer categoryId, Integer paginationLimit);
-
-	Integer getNumberOfPagesForSearch(String searchQuery, Integer paginationLimit);
-
-	List<Product> getProductsLikeNameForPageWithLimit(String searchQuery, Integer page,
-			Integer paginationLimit);
-
-	Product getProductById(Integer parameter);
-
->>>>>>> 695085bb892170646e452eb0cdff3bf54a05b59b
 	Product getProductByGuid(String guid);
 
 }

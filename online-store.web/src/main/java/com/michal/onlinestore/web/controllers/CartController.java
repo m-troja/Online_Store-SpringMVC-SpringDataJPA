@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
-<<<<<<< HEAD
 import org.springframework.ui.Model;
-=======
->>>>>>> 695085bb892170646e452eb0cdff3bf54a05b59b
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,13 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.michal.onlinestore.core.facades.CartFacade;
-<<<<<<< HEAD
 import com.michal.onlinestore.core.facades.CartItemFacade;
 import com.michal.onlinestore.core.facades.ProductFacade;
-=======
-import com.michal.onlinestore.core.facades.ProductFacade;
-import com.michal.onlinestore.core.facades.impl.CartItemFacade;
->>>>>>> 695085bb892170646e452eb0cdff3bf54a05b59b
 import com.michal.onlinestore.persistence.entities.Cart;
 import com.michal.onlinestore.persistence.entities.CartItem;
 import com.michal.onlinestore.persistence.entities.Product;
@@ -49,7 +41,6 @@ public class CartController {
 	private CartFacade cartFacade;
 	
 	@GetMapping()
-<<<<<<< HEAD
 	public String doGet(HttpSession session, Model model) {
 	    User user = (User) session.getAttribute(SignInController.LOGGED_IN_USER_ATTR);
 
@@ -65,29 +56,6 @@ public class CartController {
 	        model.addAttribute("errorMsg", "Your cart is empty!"); 
 	        return "cart";
 	    }
-=======
-	public String doGet( HttpSession session) {
-		User user = (User)session.getAttribute(SignInController.LOGGED_IN_USER_ATTR);
-		
-		if (cartFacade.findByUser(user) != null)
-		{
-			Cart cart = cartFacade.findByUser(user);
-			BigDecimal price = cartFacade.calculatePriceOfCart(cart);
-			session.setAttribute("cart", cart);
-			session.setAttribute("price", price);
-			
-			System.out.println("GET Cart : " + cart.toString());
-			System.out.println("GET Cart getSizeOfCart : " + cartFacade.getSizeOfCart(cart));
-			
-			return "cart";
-		}
-		else 
-		{
-				session.setAttribute("errorMsg", "Your cart is empty!" );
-			
-			return "cart";
-		}
->>>>>>> 695085bb892170646e452eb0cdff3bf54a05b59b
 	}
 	
 	@GetMapping(value = "/add")
@@ -107,23 +75,13 @@ public class CartController {
 	@PostMapping(value = "/remove")
 	public String remove(@RequestParam("itemId") Integer itemId, HttpSession session, @RequestParam("cartId") Integer cartId) {
 
-<<<<<<< HEAD
 		
-=======
-		System.out.println("In CartController remove...");
-		
-		System.out.println("Calling  removeItemFromCart with params itemId " +  itemId + "  cartId  " +  cartId  );
->>>>>>> 695085bb892170646e452eb0cdff3bf54a05b59b
 		
 		
 		Cart newCart = cartFacade.removeItemFromCart(cartId, itemId);
 		
 		BigDecimal price = cartFacade.calculatePriceOfCart(newCart);
 
-<<<<<<< HEAD
-=======
-		System.out.println("Size of cart sent to JSP : " + cartFacade.getSizeOfCart(newCart) );
->>>>>>> 695085bb892170646e452eb0cdff3bf54a05b59b
 		session.setAttribute("cart", newCart);
 		session.setAttribute("price", price);
 

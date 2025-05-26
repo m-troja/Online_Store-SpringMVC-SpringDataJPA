@@ -12,20 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-<<<<<<< HEAD
-=======
-import com.michal.onlinestore.core.facades.CartFacade;
-import com.michal.onlinestore.core.facades.PurchaseFacade;
->>>>>>> 695085bb892170646e452eb0cdff3bf54a05b59b
 import com.michal.onlinestore.persistence.entities.Cart;
 import com.michal.onlinestore.persistence.entities.Product;
 import com.michal.onlinestore.persistence.entities.Purchase;
 import com.michal.onlinestore.persistence.entities.User;
-<<<<<<< HEAD
 import com.michal.onlinestore.core.facades.CartFacade;
 import com.michal.onlinestore.core.facades.PurchaseFacade;
-=======
->>>>>>> 695085bb892170646e452eb0cdff3bf54a05b59b
 
 @Controller
 public class CheckoutController {
@@ -85,10 +77,6 @@ public class CheckoutController {
 		    while (attributeNames.hasMoreElements()) {
 		        String name = attributeNames.nextElement();
 		        Object value = session.getAttribute(name);
-<<<<<<< HEAD
-=======
-		        System.out.println(name + " : " + value);
->>>>>>> 695085bb892170646e452eb0cdff3bf54a05b59b
 		    }
 		    
 		return "checkout";
