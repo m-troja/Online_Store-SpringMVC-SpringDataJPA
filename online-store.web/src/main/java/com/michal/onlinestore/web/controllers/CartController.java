@@ -1,10 +1,6 @@
 package com.michal.onlinestore.web.controllers;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,20 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.michal.onlinestore.core.facades.CartFacade;
-import com.michal.onlinestore.core.facades.CartItemFacade;
 import com.michal.onlinestore.core.facades.ProductFacade;
 import com.michal.onlinestore.persistence.entities.Cart;
-import com.michal.onlinestore.persistence.entities.CartItem;
-import com.michal.onlinestore.persistence.entities.Product;
 import com.michal.onlinestore.persistence.entities.User;
+
 
 @Controller
 @RequestMapping("/cart")
@@ -41,21 +33,25 @@ public class CartController {
 	private CartFacade cartFacade;
 	
 	@GetMapping()
-	public String doGet(HttpSession session, Model model) {
-	    User user = (User) session.getAttribute(SignInController.LOGGED_IN_USER_ATTR);
-
-	    if (cartFacade.findByUser(user) != null) {
-	        Cart cart = cartFacade.findByUser(user);
-	        BigDecimal price = cartFacade.calculatePriceOfCart(cart);
-
-	        model.addAttribute("cart", cart);       
-	        model.addAttribute("price", price);    
-
-	        return "cart";
-	    } else {
-	        model.addAttribute("errorMsg", "Your cart is empty!"); 
-	        return "cart";
-	    }
+	public String doGet( HttpSession session) {
+		User user = (User)session.getAttribute(SignInController.LOGGED_IN_USER_ATTR);
+		
+		if (cartFacade.findByUser(user) != null)
+		{
+			Cart cart = cartFacade.findByUser(user);
+			BigDecimal price = cartFacade.calculatePriceOfCart(cart);
+			session.setAttribute("cart", cart);
+			session.setAttribute("price", price);
+			
+			
+			return "cart";
+		}
+		else 
+		{
+				session.setAttribute("errorMsg", "Your cart is empty!" );
+			
+			return "cart";
+		}
 	}
 	
 	@GetMapping(value = "/add")
@@ -107,6 +103,11 @@ public class CartController {
 		session.setAttribute("cart", cartFacade.findByUser(user) );
 
 		return "redirect:/cart";
+	}
+
+	public CartController(CartFacade cartFacade) {
+		super();
+		this.cartFacade = cartFacade;
 	}
 	
 }

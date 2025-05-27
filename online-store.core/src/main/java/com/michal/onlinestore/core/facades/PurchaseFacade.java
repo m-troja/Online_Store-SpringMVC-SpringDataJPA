@@ -1,10 +1,12 @@
 package com.michal.onlinestore.core.facades;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
 import com.michal.onlinestore.persistence.entities.Cart;
+import com.michal.onlinestore.persistence.entities.Product;
 import com.michal.onlinestore.persistence.entities.Purchase;
 import com.michal.onlinestore.persistence.entities.User;
 
@@ -60,4 +62,12 @@ public interface PurchaseFacade {
      * @return list of purchases associated with the user
      */
     List<Purchase> getPurchasesByUserId(Integer userId);
+    
+    /**
+     * Retrieves all product from a cart.
+     *
+     * @param cart with CartItems
+     * @return set of product from the cart
+     */
+    Set<Product> extractProductsFromCart(Cart cart);
 }

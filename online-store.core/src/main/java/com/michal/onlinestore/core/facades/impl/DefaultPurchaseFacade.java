@@ -74,7 +74,7 @@ public class DefaultPurchaseFacade implements PurchaseFacade {
 		}
 	}
 	
-	private Set<Product> extractProductsFromCart(Cart cart) {
+	public Set<Product> extractProductsFromCart(Cart cart) {
 		Set<Product> products = new HashSet<>();
 		for (CartItem item : cart.getItems()) {
 			for (int i = 0; i < item.getQuantity(); i++) {

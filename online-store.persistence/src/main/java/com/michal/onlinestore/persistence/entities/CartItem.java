@@ -93,4 +93,10 @@ public class CartItem {
 	    return 31;
 	}
 
+	public CartItem(Product product, Integer quantity) {
+		super();
+		this.product = product;
+		this.quantity = quantity;
+	}
+
 }

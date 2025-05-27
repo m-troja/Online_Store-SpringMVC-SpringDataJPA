@@ -55,11 +55,11 @@ public class Product {
 	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
-	public Category getCategoryDto() {
+	public Category getCategory() {
 		return category;
 	}
-	public void setCategoryDto(Category categoryDto) {
-		this.category = categoryDto;
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 	public void setImgName(String imgName) {
 		this.imgName = imgName;

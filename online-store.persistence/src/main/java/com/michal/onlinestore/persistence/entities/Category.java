@@ -49,4 +49,18 @@ public class Category
 		return "Category [id=" + id + ", categoryName=" + categoryName + ", imgName=" + imgName + "]";
 	}
 
+	public Category(String categoryName) {
+		super();
+		this.categoryName = categoryName;
+	}
+
+	public Category(Integer id, String categoryName, String imgName) {
+		super();
+		this.id = id;
+		this.categoryName = categoryName;
+		this.imgName = imgName;
+	}
+
+
+
 }
