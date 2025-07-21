@@ -1,4 +1,4 @@
-# 🛒 Online Store Backend
+#  Online Store Backend
 
 A modular, production-grade backend system for an online store, built using Java 17 and the Spring Framework ecosystem. This project follows domain-driven design principles and clean architecture by splitting the application into well-defined modules: `core`, `persistence`, and `web`.
 
@@ -6,7 +6,7 @@ Designed for scalability, maintainability, and clarity, this backend serves as a
 
 ---
 
-## 🧱 Architecture Overview
+##  Architecture Overview
 
 The application is divided into the following core modules:
 
@@ -34,7 +34,7 @@ This separation of concerns enables isolated testing, easier onboarding, and mor
 
 ---
 
-## 🚀 Features
+## Features
 
 - **Modular Design**  
   Cleanly separated layers for domain, persistence, and presentation.
@@ -59,10 +59,10 @@ This separation of concerns enables isolated testing, easier onboarding, and mor
 
 ---
 
-## 🛠️ Technologies & Tools
+## Technologies & Tools
 
 - **Java 17**
-- **Spring Boot**
+- **Spring MVC**
 - **Spring Web**
 - **Spring Data JPA**
 - **Hibernate Validator**
@@ -71,7 +71,7 @@ This separation of concerns enables isolated testing, easier onboarding, and mor
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```plaintext
 online-store/
