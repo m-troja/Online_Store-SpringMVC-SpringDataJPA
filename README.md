@@ -12,7 +12,7 @@ The application is divided into the following core modules:
 
 ### `core` – Domain & Business Logic
 This module defines the essential building blocks of the system:
-- Domain entities (e.g., `Product`, `Order`, `User`)
+- Domain entities (e.g., `Product`, `Purchase`, `Basket`, `User`)
 - Business rules and core services
 - Interfaces (ports) for infrastructure-level interactions
 
