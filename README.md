@@ -2,7 +2,7 @@
 
 A modular, production-grade backend system for an online store, built using Java 17 and the Spring Framework ecosystem. This project follows domain-driven design principles and clean architecture by splitting the application into well-defined modules: `core`, `persistence`, and `web`.
 
-Designed for scalability, maintainability, and clarity, this backend serves as a robust foundation for building modern e-commerce applications.
+Designed for scalability, maintainability, and clarity, this backend serves as a foundation for building e-commerce applications.
 
 ---
 
@@ -21,14 +21,13 @@ Implements the infrastructure layer using Spring Data JPA. Responsibilities incl
 - Repository definitions
 - JPA entities and mappings
 - Transactional operations
-- Configuration of database access (e.g., PostgreSQL, H2)
+- Configuration of database access
 
 ### `web` – API & Web Layer
 Exposes the application's functionality via RESTful endpoints:
-- Spring Boot entry point
+- Spring entry point
 - Controllers with request/response DTOs
 - Global exception handling and validation
-- Swagger/OpenAPI documentation (planned)
 
 This separation of concerns enables isolated testing, easier onboarding, and more agile development workflows.
 
@@ -38,9 +37,6 @@ This separation of concerns enables isolated testing, easier onboarding, and mor
 
 - **Modular Design**  
   Cleanly separated layers for domain, persistence, and presentation.
-
-- **RESTful API**  
-  Provides endpoints to manage core business entities such as products, users, and orders.
 
 - **Validation and Error Handling**  
   Uses `javax.validation` annotations and centralized exception handling to deliver clean error messages and enforce input integrity.
